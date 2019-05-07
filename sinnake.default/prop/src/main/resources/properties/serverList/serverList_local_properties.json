@@ -1,0 +1,11 @@
+{
+	"oauthServer" : {
+		"eurekaServiceId" : "oAuth"
+		, "list" : {
+			"saveOauth" : "/oauth/saveOauth"
+			, "delOauth" : "/oauth/delOauth"
+			, "tokenOauth" : "/oauth/token"
+			, "checkOauth" : "/oauth/check_token"
+		}
+	}
+}

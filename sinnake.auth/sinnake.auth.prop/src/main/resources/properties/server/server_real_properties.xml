@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+    <comment>server_real_properties</comment>
+    <!-- 서버 설정 내용 시작 -->	
+
+	<!-- 암호화 관련 설정 -->
+	<entry key="dbAes256.key">sinnakeAes256@$%DB</entry>
+	<entry key="pwAes256.key">sinnakeAes256@$%PW</entry>
+
+	<entry key="sqlUsersByUsernameQuery">
+		SELECT
+			M.MEMBER_ID 
+			, M.USERNAME
+			, M.PASSWORD 
+			, M.ENABLED 
+			, M.ACCOUNTNONEXPIRED 
+			, M.CREDENTIALSNONEXPIRED 
+			, M.ACCOUNTNONLOCKED 
+			, IFNULL(MA.ATTEMPTS, 0) AS ATTEMPTS
+			, IFNULL(MA.LASTMODIFIED, SYSDATE()) AS LASTMODIFIED 
+		FROM MEMBER M 
+			LEFT JOIN MEMBERATTEMPTS MA ON M.MEMBER_ID = MA.MEMBER_ID
+		WHERE
+			M.USERNAME = ?		
+	</entry>
+	
+    <entry key="sqlAuthoritiesByUsernameQuery">
+    	SELECT 
+			M.USERNAME
+			, UR.ROLE 
+		FROM 
+			USER_ROLES UR
+			INNER JOIN MEMBER M ON M.MEMBER_ID = UR.MEMBER_ID	
+		WHERE 
+			M.USERNAME = ?
+   	</entry>
+   	
+	<!-- Public Key  -->
+	<entry key="publicKey">
+		-----BEGIN PUBLIC KEY-----
+		MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr5ui+5AA8v1LivSYNGdZ
+		0O76SBgktU3CjG+BcUb0mJ1fl34+So75bRI3/+n8AJP//Xp3OS62niQyRB5LEdCr
+		7ox5RAQlLHFkkJHQysi2/236Br8ZDiM1AfT4Hz5AQ9D4Pk5H/n6stKuS2ZffHAWA
+		W7/qK7PC6z4ncSlhVYr/zXNj7HVx9YFP7gZx6faaar6UvV96vX8W4xcITxvLpaCB
+		nF9TeOUxLHYI3tmnxmE8gRQXpdCH7X3IB3f4QfVCMIIrSD8d3si5w5VArlEMRQ9I
+		TEOA0Iq8VJKGjlu+haycTgIPJD3yGhU7Zb3EQfBZvQGC31beogycEf9imnvHDW4N
+		vQIDAQAB
+		-----END PUBLIC KEY-----
+	</entry>	
+</properties>

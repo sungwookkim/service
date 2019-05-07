@@ -1,0 +1,10 @@
+server:
+  port: 9090
+  address: 0.0.0.0
+ 
+spring:
+  application:
+    name: admin
+    
+logging:
+  file: ./logs/bootAdmin/bootAdminLogFile.txt

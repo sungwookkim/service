@@ -1,0 +1,10 @@
+{
+	"oauthServer" : {
+		"ip" : "localhost"
+		, "port" : "8080"
+		, "list" : {
+			"saveOauth" : "/oauth/saveOauth"
+			, "delOauth" : "/oauth/delOauth"					
+		}
+	}
+}

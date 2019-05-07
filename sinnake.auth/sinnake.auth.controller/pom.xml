@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+	<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>sinnake.auth</groupId>
+		<artifactId>sinnake.auth</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>sinnake.auth.controller</groupId>
+	<artifactId>sinnake.auth.controller</artifactId>
+	<version>0.0.1</version>
+	<name>sinnake.auth.controller</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>	
+		<dependency>
+			<groupId>sinnake.default.util</groupId>
+			<artifactId>sinnake.default.util</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+	
+		<dependency>
+			<groupId>sinnake.default.entity</groupId>
+			<artifactId>sinnake.default.entity</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+	
+		<dependency>
+			<groupId>sinnake.auth.domain</groupId>
+			<artifactId>sinnake.auth.domain</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>

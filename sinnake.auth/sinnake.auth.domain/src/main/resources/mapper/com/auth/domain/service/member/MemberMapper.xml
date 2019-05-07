@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.auth.domain.service.command.member.MemberMapper">
+
+	<update id="setUserUpdateLocked" parameterType="java.util.Map">
+		UPDATE MEMBER SET 
+			ACCOUNTNONLOCKED = #{locked} 
+		WHERE 
+			USERNAME = #{userName}	
+	</update>
+	
+	<select id="getUserAttempts" resultType="java.util.HashMap" parameterType="java.lang.String">
+		SELECT 
+			IFNULL(MA.attempts, -1) AS ATTEMPTS
+			, M.MEMBER_ID AS ID
+			, M.USERNAME AS USERNAME
+		FROM 
+			MEMBER M
+			LEFT JOIN MEMBERATTEMPTS MA ON M.MEMBER_ID = MA.MEMBER_ID
+		WHERE 
+			M.USERNAME = #{userName}
+	</select>
+	
+	<insert id="addUserAttempts" parameterType="java.util.Map">
+		INSERT INTO MEMBERATTEMPTS (MEMBER_ID, ATTEMPTS, LASTMODIFIED) 
+		VALUES(#{memberId}, #{attempts}, NOW())
+	</insert>
+
+	<update id="setUserAttempts" parameterType="java.lang.Long">
+		UPDATE MEMBERATTEMPTS SET 
+			ATTEMPTS = ATTEMPTS + 1
+			, LASTMODIFIED = NOW() 
+		WHERE 
+			MEMBER_ID = #{memberId}
+	</update>
+	
+	<update id="setUserAttemptsRest" parameterType="java.lang.Long">
+		UPDATE MEMBERATTEMPTS SET 
+			ATTEMPTS = 0
+			, LASTMODIFIED = NOW() 
+		WHERE 
+			MEMBER_ID = #{memberId}
+			AND ATTEMPTS > 0
+	</update>
+	
+</mapper>

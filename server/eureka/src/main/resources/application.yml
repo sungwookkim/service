@@ -1,0 +1,40 @@
+server:
+  port: 8761
+  tomcat:
+    max-connections: 15000
+    min-spare-threads: 200
+    max-threads: 500
+        
+spring:
+  jackson:
+    serialization:            
+      write-dates-as-timestamps: true
+      write-date-timestamps-as-nanoseconds: false  
+  application:
+    name: eurekaServer
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true      
+        url:
+        - http://192.168.0.40:9090
+
+eureka:
+  instance:
+    hostname: 192.168.0.33
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+
+logging:
+  file: ./logs/eureka/eurekaServerLogFile.txt

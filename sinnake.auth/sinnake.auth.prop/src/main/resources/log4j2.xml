@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Root level="error">
+			<AppenderRef ref="Console"/>
+		</Root>
+			
+		<Logger name="sinnake" level="debug">
+      		<AppenderRef ref="Console"/>
+    	</Logger>
+
+		<Logger name="org.springframework" level="debug" additivity="false">
+      		<AppenderRef ref="Console"/>
+    	</Logger>
+    	
+    	<Logger name="org.hibernate.type" level="trace" additivity="false">
+    		<AppenderRef ref="Console"/>
+    	</Logger>
+
+    	<Logger name="org.hibernate.SQL" level="debug" additivity="false">
+    		<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<logger name="jdbc.splonly" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+		</logger>
+		
+		<logger name="jdbc.sqltiming" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+		</logger>
+		
+		<logger name="jdbc.audit" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+		</logger>
+		
+		<logger name="jdbc.resultset" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+		</logger>
+		
+		<logger name="jdbc.resultsettable" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+		</logger>
+		
+		<logger name="jdbc.connection" level="DEBUG">
+			<AppenderRef ref="Console"/>
+		</logger>
+
+	</Loggers>
+</Configuration>

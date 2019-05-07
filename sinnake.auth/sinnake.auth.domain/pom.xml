@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+	<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<modelVersion>4.0.0</modelVersion>
+		<parent>
+			<groupId>sinnake.auth</groupId>
+			<artifactId>sinnake.auth</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</parent>
+		<groupId>sinnake.auth.domain</groupId>
+		<artifactId>sinnake.auth.domain</artifactId>
+		<version>0.0.1</version>
+		<name>sinnake.auth.domain</name>
+		<properties>
+			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		</properties>
+		
+		<dependencies>
+			<!-- DB -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-jdbc</artifactId>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.mybatis</groupId>
+			    <artifactId>mybatis</artifactId>
+			    <version>3.4.6</version>
+			</dependency>
+			 
+			<dependency>
+			    <groupId>org.mybatis</groupId>
+			    <artifactId>mybatis-spring</artifactId>
+			    <version>1.3.2</version>
+			</dependency>
+				
+			<dependency>
+				<groupId>sinnake.default.util</groupId>
+				<artifactId>sinnake.default.util</artifactId>
+				<version>0.0.1</version>
+				<type>jar</type>
+			</dependency>		
+			
+			<dependency>
+				<groupId>sinnake.default.entity</groupId>
+				<artifactId>sinnake.default.entity</artifactId>
+				<version>0.0.1</version>
+				<type>jar</type>
+			</dependency>    
+		</dependencies>
+</project>

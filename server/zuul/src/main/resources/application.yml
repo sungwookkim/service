@@ -1,0 +1,92 @@
+server:
+  port: 7000
+  tomcat:
+    max-connections: 15000
+    
+spring:
+  jackson:
+    serialization:            
+      write-dates-as-timestamps: true
+      write-date-timestamps-as-nanoseconds: false
+  application:
+    name: zuul-service
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
+        url:
+        - http://192.168.0.40:9090  
+      
+zuul:
+  ribbon-isolation-strategy: THREAD
+  thread-pool:
+    use-separate-thread-pools: true
+  host:
+    max-total-connections: 1000
+    max-per-route-connections: 400
+  ignored-services: '*'
+  sensitive-headers:  
+  routes: 
+    member:      
+        path: /member/**
+        service-id: member
+        strip-prefix: false
+  
+hystrix:
+  threadpool:
+    default:
+      coreSize: 1000
+      maximumSize: 2000
+      #allowMaximumSizeToDivergeFromCoreSize: true
+      queueSizeRejectionThreshold: -1
+      maxQueueSize: -1
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+              timeoutInMilliseconds: 20000
+eureka:
+  instance:
+    hostname: localhost
+    status-page-url: http://${eureka.instance.hostname}:${server.port}/info
+    health-check-url-path: http://${eureka.instance.hostname}:${server.port}/health
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://192.168.0.33:8761/eureka/
+
+member:
+  ribbon:
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NFLoadBalancerPingInterval: 0
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    ServerListRefreshInterval : 3000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 300
+    MaxAutoRetries: 0
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+
+logging:
+  file: ./logs/zuul/zuulLogFile.txt
+
+httppool:
+  maxPerRoute: 100
+  maxTotal: 1000
+  connectionRequestTimeout: 5000
+  connectTimeout: 5000
+  socketTimeout: 5000  
