@@ -60,7 +60,7 @@ eureka:
     healthcheck:
       enabled: true
     service-url:
-      defaultZone: http://192.168.0.33:8761/eureka/
+      defaultZone: http://192.168.0.45:8761/eureka/
 
 member:
   ribbon:
