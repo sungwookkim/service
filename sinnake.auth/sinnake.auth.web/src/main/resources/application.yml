@@ -2,8 +2,6 @@ server:
   port: 8080
   tomcat:
     max-connections: 15000
-    min-spare-threads: 200
-    max-threads: 500
 
 spring:
   jackson:

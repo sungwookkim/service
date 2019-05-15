@@ -1,10 +1,10 @@
 {
 	"oauthServer" : {
-		"ip" : "localhost"
-		, "port" : "8080"
+		"eurekaServiceId" : "oAuth"
 		, "list" : {
 			"saveOauth" : "/oauth/saveOauth"
-			, "delOauth" : "/oauth/delOauth"					
+			, "delOauth" : "/oauth/delOauth"
+			, "refreshOauth" : ""
 		}
 	}	
 }

@@ -22,7 +22,7 @@ public class SinnakeAuthApplication {
 		TomcatServletWebServerFactory tomcatServletWebServerFactory = new TomcatServletWebServerFactory();
 		
 		tomcatServletWebServerFactory.addConnectorCustomizers(connector -> {
-			((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setConnectionTimeout(10000);
+			((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setConnectionTimeout(30000);
 		});
 		
 		return tomcatServletWebServerFactory; 

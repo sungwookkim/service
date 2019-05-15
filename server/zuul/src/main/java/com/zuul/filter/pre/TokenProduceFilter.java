@@ -23,6 +23,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import com.sinnake.entity.ResultEntity;
+import com.util.CookieUtil;
 
 import config.serverList.ServerListProp;
 import config.serverList.ServerListProp.ServerList;
@@ -58,12 +59,12 @@ public class TokenProduceFilter extends ZuulFilter {
 	public Object run() throws ZuulException {
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		HttpServletRequest httpServletRequest = requestContext.getRequest();
-		
+
 		requestContext.setSendZuulResponse(false);
 		requestContext.setRouteHost(null);
 
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		ResultEntity<Map> result = new RestProcess<Map>()
+		@SuppressWarnings({"unchecked" })
+		ResultEntity<String> result = new RestProcess<String>()
 			.call(() -> {
 				String url = this.oauthServerInfo.getHttpFullAddress("tokenOauth");
 				HttpHeaders httpHeaders = new HttpHeaders();
@@ -73,24 +74,39 @@ public class TokenProduceFilter extends ZuulFilter {
 				httpHeaders.add("authorization", "Basic " + Base64.getEncoder().encodeToString((userName + ":" + userName).getBytes()));							
 
 				ResponseEntity<String> response = null;
+				
+				response = this.restTemplate.exchange(url
+					, HttpMethod.POST
+					, new HttpEntity<>(new LinkedMultiValueMap<String ,String>() {
+						private static final long serialVersionUID = 1L;
+						{
+							add("username", userName);
+							add("password", httpServletRequest.getParameter("password"));
+							add("grant_type", GRANT_TYPE);
+						}
+					} , httpHeaders)
+					, String.class);
 
-				try {				
-					response = this.restTemplate.exchange(url
-						, HttpMethod.POST
-						, new HttpEntity<>(new LinkedMultiValueMap<String ,String>() {
-							private static final long serialVersionUID = 1L;
-							{
-								add("username", userName);
-								add("password", httpServletRequest.getParameter("password"));
-								add("grant_type", GRANT_TYPE);
-							}
-						} , httpHeaders)
-						, String.class);
-					
-					return new ResultEntity<>(String.valueOf(response.getStatusCodeValue())
-						, new Gson().fromJson(response.getBody(), HashMap.class));
+				Map<String, Object> resultToken = new Gson().fromJson(response.getBody(), HashMap.class);
+				String accessToken = resultToken.get("access_token").toString();
+				String refreshToken = resultToken.get("refresh_token").toString();
+				
+				CookieUtil.setCookie("accessToken", accessToken, (c) -> {
+					c.setPath("/");
+					c.setHttpOnly(true);
+					// c.setSecure(true);
+					requestContext.getResponse().addCookie(c);
+				});
+				
+				httpServletRequest.getSession().setAttribute("refreshToken", refreshToken);
 
-				} catch(HttpStatusCodeException httpStatusCodeException) {
+				return new ResultEntity<>(String.valueOf(response.getStatusCodeValue()), "{code : 0}");
+			})
+			.fail(e -> {
+				e.printStackTrace();
+
+				if (e instanceof HttpStatusCodeException) {
+					HttpStatusCodeException httpStatusCodeException = (HttpStatusCodeException) e;
 					HttpStatus httpStatus = httpStatusCodeException.getStatusCode();
 					Map<String, Object> body = new HashMap<>();
 					
@@ -101,16 +117,9 @@ public class TokenProduceFilter extends ZuulFilter {
 						body = new Gson().fromJson(httpStatusCodeException.getResponseBodyAsString(), HashMap.class);
 					}
 
-					return new ResultEntity<>(String.valueOf(httpStatus.value()), body);
-
-				} catch(Exception e) {
-					e.printStackTrace();
-					
-					return new ResultEntity<>("500");
+					return new ResultEntity<>(String.valueOf(httpStatus.value()),  new Gson().toJson(body));					
 				}
-
-			})
-			.fail(() -> {
+				
 				return new ResultEntity<>("500");
 			})
 			.exec();
@@ -132,5 +141,6 @@ public class TokenProduceFilter extends ZuulFilter {
 	public int filterOrder() {
 		return 0;
 	}
+
 
 }

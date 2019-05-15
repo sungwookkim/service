@@ -4,6 +4,8 @@ server:
     max-connections: 15000
     
 spring:
+  main:
+    allow-bean-definition-overriding: true
   jackson:
     serialization:            
       write-dates-as-timestamps: true
@@ -17,7 +19,19 @@ spring:
           prefer-ip: true
         url:
         - http://192.168.0.40:9090  
-      
+  session:
+    timeout:
+      seconds: 60
+    store-type: REDIS
+    redis:
+      flush-mode: on-save
+      namespace: spring:session
+      cleanup-cron : 0 0 5 31 2 ?      
+  redis:
+    host: 192.168.0.40
+    port: 6379
+    password: sinnake
+
 zuul:
   ribbon-isolation-strategy: THREAD
   thread-pool:
@@ -47,7 +61,7 @@ hystrix:
         isolation:
           strategy: THREAD
           thread:
-              timeoutInMilliseconds: 20000
+              timeoutInMilliseconds: 100000
 eureka:
   instance:
     hostname: localhost

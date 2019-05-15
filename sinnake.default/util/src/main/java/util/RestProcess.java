@@ -1,6 +1,7 @@
 package util;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.sinnake.entity.ResultEntity;
@@ -8,6 +9,7 @@ import com.sinnake.entity.ResultEntity;
 public class RestProcess<T> {
 	Supplier<ResultEntity<T>> call = null;
 	Supplier<ResultEntity<T>> fail = null;	
+	Function<Exception, ResultEntity<T>> funcFail = null;
 	
 	public RestProcess() { }
 	
@@ -21,6 +23,11 @@ public class RestProcess<T> {
 		return this;
 	}
 	
+	public RestProcess<T> fail(Function<Exception, ResultEntity<T>> funcFail) {
+		this.funcFail = funcFail;
+		return this;
+	}	
+	
 	public ResultEntity<T> exec() {
 		
 		ResultEntity<T> rtn = null;
@@ -30,11 +37,15 @@ public class RestProcess<T> {
 				.map(Supplier::get)
 				.get();
 		} catch(Exception e) {
-			rtn = Optional.of(this.fail)
-				.map(Supplier::get)
-				.get();
+			rtn = Optional.ofNullable(this.funcFail)
+				.map(f -> f.apply(e))
+				.orElseGet(() -> {
+					return Optional.ofNullable(this.fail)
+						.map(Supplier::get)
+						.get();
+				});					
 
-			throw e;
+			//throw e;
 		}
 		
 		return rtn;

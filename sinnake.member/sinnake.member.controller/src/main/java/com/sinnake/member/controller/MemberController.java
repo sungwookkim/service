@@ -61,7 +61,8 @@ public class MemberController {
 				}
 				
 				return resultEntity;
-			}).exec();
+			})
+			.exec();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/signUp")
