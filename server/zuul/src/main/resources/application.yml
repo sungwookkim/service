@@ -103,4 +103,7 @@ httppool:
   maxTotal: 1000
   connectionRequestTimeout: 5000
   connectTimeout: 5000
-  socketTimeout: 5000  
+  socketTimeout: 5000
+ 
+tokencontrol:
+  token-control: "session"
