@@ -7,14 +7,15 @@
 	<!-- 서버 관련 프로퍼티 내용 시작 -->
     
 	<!-- 서버 유형(local, dev, stage, real) -->
-    <entry key="type.propertie">local</entry>
+    <entry key="auth.type.propertie">local</entry>
     <!-- DB 종류 -->
- 	<entry key="dbType.propertie">mysql</entry> 
+ 	<entry key="auth.dbType.propertie">mysql</entry> 
  	
  	<!-- 서버유형별 프로퍼티 파일 -->
- 	<entry key="serverPropFile.propertie">properties/server/server_${serverType}_properties.xml</entry> 
+ 	<entry key="auth.serverPropFile.propertie">properties/server/server_${serverType}_properties.xml</entry>
+
  	<!-- 서버유형별 DB 종류 프로퍼티 파일-->
- 	<entry key="dbPropFile.propertie">properties/db/${serverDb}/db_${serverType}_${serverDb}_properties.xml</entry>
+ 	<entry key="auth.dbPropFile.propertie">properties/db/${serverDb}/db_${serverType}_${serverDb}_properties.xml</entry>
  	 
 	<!-- 서버 관련 프로퍼티 내용 끝 -->
 </properties>

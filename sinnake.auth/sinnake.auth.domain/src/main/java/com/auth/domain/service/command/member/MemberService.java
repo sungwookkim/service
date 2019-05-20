@@ -29,7 +29,7 @@ public class MemberService {
 	 * @author sinnakeWEB
 	 * @param memberId 사용자 채번
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(transactionManager="authTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void resetFailAttempts(Long memberId) {
 		memberMapper.setUserAttemptsRest(memberId);
 	}
@@ -41,7 +41,7 @@ public class MemberService {
 	 * @param userName 사용자 ID
 	 * @param maxAttempts 비밀번호 틀린 횟수 기준 값
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(transactionManager="authTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateFailAttempts(String userName, int maxAttempts) {
 		HashMap<String, Object> userAttempts = memberMapper.getUserAttempts(userName);
 		

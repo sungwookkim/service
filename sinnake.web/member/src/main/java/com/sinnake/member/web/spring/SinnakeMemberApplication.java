@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableEurekaClient
-@ComponentScan(basePackages = {"com.member", "com.sinnake", "config"})
+@ComponentScan(basePackages = {"com.member", "com.sinnake", "config", "prop"})
 public class SinnakeMemberApplication {
 
 	public static void main(String[] args) {

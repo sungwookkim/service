@@ -21,13 +21,6 @@ public class TokenProduceSession extends TokenProduceDefault {
 	}
 	
 	@Override
-	public void tokenSave(Map<String, Object> resultToken) {
-
-		RequestContext requestContext = this.getRequestContext();
-		
-		this.tokenSave(resultToken, requestContext.getRequest(), requestContext.getResponse());		
-	}
-	
 	public void tokenSave(Map<String, Object> resultToken, HttpServletRequest req, HttpServletResponse resp) {
 		
 		String accessToken = resultToken.get(TokenKey.RESULT_ACCESS_TOKEN.getKey()).toString();

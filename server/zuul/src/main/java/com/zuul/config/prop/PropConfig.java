@@ -3,7 +3,8 @@ package com.zuul.config.prop;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+
+import prop.PropConfigAbs;
 
 /**
  * 모든 프로퍼티를 취합하는 공통 프로퍼티 클래스.
@@ -11,8 +12,11 @@ import org.springframework.core.io.ClassPathResource;
  * @author sinnakeWEB
  */
 @Configuration
-public class PropConfig {
-	private static String globalPropFile = "./properties/properties.xml";
+public class PropConfig extends PropConfigAbs {
+	
+	public PropConfig() {
+		super("./properties/properties.xml");
+	}
 	
 	/**
 	 * 모든 프로퍼티를 취합하는 공통 프로퍼티를 반환 메서드.
@@ -21,10 +25,8 @@ public class PropConfig {
 	 * @return {@link PropertiesFactoryBean}
 	 */
 	@Bean
+	@Override
 	public PropertiesFactoryBean globalProp() {
-	    PropertiesFactoryBean bean = new PropertiesFactoryBean();	    
-	    bean.setLocation(new ClassPathResource(globalPropFile));
-
-	    return bean;
+		return super.prop();
 	}
 }

@@ -43,6 +43,13 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<dependency>
+			<groupId>sinnake.default.util</groupId>
+			<artifactId>sinnake.default.util</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>		
 	</dependencies>
 		
 </project>

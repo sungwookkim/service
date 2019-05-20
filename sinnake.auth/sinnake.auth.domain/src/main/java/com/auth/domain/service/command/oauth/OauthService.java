@@ -38,7 +38,7 @@ public class OauthService {
 	 * @param client_id 사용자 ID
 	 * @return ResultEntity
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(transactionManager="authTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public ResultEntity<SpringOauth> oauthSave(String client_id) {
 
 		ResultEntity<SpringOauth> resultEntity = new SpringOauth(client_id, "ROLE_USER").oauthSave();
@@ -59,7 +59,7 @@ public class OauthService {
 	 * @param client_id 사용자 ID
 	 * @return ResultEntity
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(transactionManager="authTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public ResultEntity<SpringOauth> oauthDel(String client_id) {
 
 		OauthDel oauthDel = new OauthDelImpl(client_id, this.oauthReadRepository::findId);

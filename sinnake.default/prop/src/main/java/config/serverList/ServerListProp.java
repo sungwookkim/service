@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
@@ -16,17 +15,14 @@ import com.google.gson.Gson;
 
 @Configuration
 public class ServerListProp {
-	private String propFile;
-	private String serverType;
+
+	final static String SERVER_LIST_PATH = "properties/serverList/serverList_properties.json";
+	
 	private Map<String, ServerList> serverlist = new HashMap<>();
 	
 	@Autowired
-	public ServerListProp(@Value("#{globalProp['serverListPropFile.propertie']}") String propFile
-		, @Value("#{globalProp['type.propertie']}") String serverType) throws Exception {
-
-		this.propFile = propFile;
-		this.serverType = serverType;
-		
+	public ServerListProp() throws Exception {
+	
 		this.setServerList();
 	}
 	
@@ -59,7 +55,7 @@ public class ServerListProp {
 		String result = "";
 		String line = "";
 		
-		ClassPathResource classPathResource = new ClassPathResource(this.propFile.replace("${serverType}", this.serverType));
+		ClassPathResource classPathResource = new ClassPathResource(SERVER_LIST_PATH);
 		BufferedReader br = new BufferedReader(new InputStreamReader(classPathResource.getInputStream(), "UTF-8"));
 		
 		while((line = br.readLine()) != null) { result += line.trim(); }

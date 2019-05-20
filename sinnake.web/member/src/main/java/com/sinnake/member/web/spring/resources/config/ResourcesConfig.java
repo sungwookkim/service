@@ -29,7 +29,7 @@ public class ResourcesConfig extends ResourceServerConfigurerAdapter {
 	private String publicKey;
 	
 	@Autowired
-	public ResourcesConfig(@Value("#{serverProp['publicKey']}") String publicKey) {
+	public ResourcesConfig(@Value("#{webGlobalProp['publicKey']}") String publicKey) {
 		
 		this.publicKey = publicKey;
 	}

@@ -21,7 +21,7 @@ spring:
         - http://192.168.0.40:9090  
   session:
     timeout:
-      seconds: 60
+      seconds: 1800
     store-type: REDIS
     redis:
       flush-mode: on-save
@@ -80,13 +80,13 @@ member:
   ribbon:
     NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
-    NFLoadBalancerPingInterval: 0
+    NFLoadBalancerPingInterval: 1
     ConnectTimeout: 10000
     ReadTimeout: 10000
     ServerListRefreshInterval : 3000
     MaxTotalHttpConnections: 500
     MaxConnectionsPerHost: 300
-    MaxAutoRetries: 0
+    MaxAutoRetries: 1
   
 management:
   endpoints:
@@ -106,4 +106,4 @@ httppool:
   socketTimeout: 5000
  
 tokencontrol:
-  token-control: "session"
+  token-control: "cookie"

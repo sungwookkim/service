@@ -6,11 +6,11 @@
     
 	<!-- 서버 설정 내용 시작 -->	
 	<!-- spring security 관련 설정 -->
-	<entry key="maxAttempts">5</entry>
-	<entry key="usernameParameter">username</entry>
-	<entry key="passwordParameter">password</entry>
+	<entry key="auth.maxAttempts">5</entry>
+	<entry key="auth.usernameParameter">username</entry>
+	<entry key="auth.passwordParameter">password</entry>
 	
-	<entry key="sqlUsersByUsernameQuery">
+	<entry key="auth.sqlUsersByUsernameQuery">
 		SELECT
 			M.MEMBER_ID 
 			, M.USERNAME
@@ -27,7 +27,7 @@
 			M.USERNAME = ?		
 	</entry>
 	
-    <entry key="sqlAuthoritiesByUsernameQuery">
+    <entry key="auth.sqlAuthoritiesByUsernameQuery">
     	SELECT 
 			M.USERNAME
 			, UR.ROLE 
@@ -39,7 +39,7 @@
    	</entry>
    	
 	<!-- 암호화 관련 설정 -->
-	<entry key="dbAes256.key">sinnakeAes256@$%DB</entry>
-	<entry key="pwAes256.key">sinnakeAes256@$%PW</entry>
+	<entry key="auth.dbAes256.key">sinnakeAes256@$%DB</entry>
+	<entry key="auth.pwAes256.key">sinnakeAes256@$%PW</entry>
 	<!-- 서버 설정 내용 끝 -->
 </properties>

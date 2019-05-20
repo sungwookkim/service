@@ -78,7 +78,6 @@
 	</build>
 		
 	<modules>
-		<module>sinnake.auth.web</module>
 		<module>sinnake.auth.prop</module>
 		<module>sinnake.auth.domain</module>
     	<module>sinnake.auth.controller</module>

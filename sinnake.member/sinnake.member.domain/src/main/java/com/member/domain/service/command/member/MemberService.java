@@ -42,7 +42,7 @@ public class MemberService {
 	public MemberService(MemberCommandRepository memberCommandRepository
 		, MemberReadRepository memberReadRepository
 		, RestTemplate restTemplate
-		, @Value("#{serverProp['pwAes256.key']}") String pwKey
+		, @Value("#{memberServerProp['member.pwAes256.key']}") String pwKey
 		, ServerListProp serverListProp) {
 
 		this.memberCommandRepository = memberCommandRepository;		
@@ -67,7 +67,7 @@ public class MemberService {
 	 * @return 결과 값
 	 * @throws Exception 예외 발생
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(transactionManager = "memberTransactionManager",  propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public ResultEntity<Member> signUpdate(String userName, String password, String rePassword
 		, String address, String detailAddress, String postCode) throws Exception {
 
@@ -102,7 +102,7 @@ public class MemberService {
 	 * @return 결과 값
 	 * @throws Exception 예외 발생
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(transactionManager = "memberTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public ResultEntity<Member> signUp(String userName, String password, String rePassword, String address
 		, String detailAddress, String postCode) throws Exception {
 

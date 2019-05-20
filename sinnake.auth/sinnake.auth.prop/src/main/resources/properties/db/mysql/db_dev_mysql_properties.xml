@@ -5,10 +5,10 @@
     <comment>db_dev_mysql_properties</comment>
     
     <!-- DB 설정 내용 시작 -->
-    <entry key="db.sqlSessionFactoryBean.mapperLocations">classpath:mapper/com/auth/entity/service/**/*.xml</entry>
+    <entry key="auth.db.sqlSessionFactoryBean.mapperLocations">classpath:mapper/com/auth/domain/service/**/*.xml</entry>
 
-    <entry key="db.mysql.username">MnNNNxK6gwZo9c9Jv8s33g==</entry>
-    <entry key="db.mysql.url">gxh2mS7pEieZTC2o0fbUMF1VpBYNljHlz3Txn3A3Z3xCwl2d4tohVbbf4VO4OSgD</entry>
-    <entry key="db.mysql.password">ytHp9z9rxLogkLtiOcJx/A==</entry>
+    <entry key="auth.db.mysql.username">MnNNNxK6gwZo9c9Jv8s33g==</entry>
+    <entry key="auth.db.mysql.url">uolKJdOxnCYScLiPkKkA319ScjZqqn+Dij7aFfPPwzTh5zzHYHj1pIeku8JNBoIB</entry>
+    <entry key="auth.db.mysql.password">ytHp9z9rxLogkLtiOcJx/A==</entry>
     <!-- DB 설정 내용 끝 -->
 </properties>

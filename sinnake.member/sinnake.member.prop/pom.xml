@@ -11,12 +11,38 @@
   	<artifactId>sinnake.member.prop</artifactId>
   	<version>0.0.1</version>
   	<packaging>jar</packaging>
-  	<name>sinnake.member.prop</name>  	
+  	<name>sinnake.member.prop</name>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	  	
   	<dependencies>
+		<!-- DB -->	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency> 
+
+		<!-- MySQL -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.lazyluke</groupId>
+		    <artifactId>log4jdbc-remix</artifactId>
+		    <version>0.2.7</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>sinnake.default.util</groupId>
+			<artifactId>sinnake.default.util</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+
 	  	<dependency>
 	  		<groupId>sinnake.default.prop</groupId>
 	  		<artifactId>sinnake.default.prop</artifactId>
