@@ -89,7 +89,7 @@ public abstract class TokenRefresh<T> {
 						
 						return resultEntity;
 					})
-					.fail(e -> this.refreshFail(e))
+					.fail(e -> this.refreshFail((Exception)e) )
 					.exec();
 			} else if(statusCode < 0) {
 				this.requestContext.setSendZuulResponse(false);

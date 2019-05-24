@@ -7,10 +7,6 @@
 	</parent>
 	<artifactId>sinnake.default.util</artifactId>
 	<groupId>sinnake.default.util</groupId>
-	
-	<properties>
-		<java-version>1.8</java-version>
-	</properties>
 		
 	<dependencies>	
 		<!-- Web -->

@@ -48,10 +48,10 @@ public abstract class TokenProduce<T> {
 				if("200".equals(statusCode) || ResultEntity.ResultCode.SUCESS.getCode().equals(statusCode)) {
 					this.tokenSave(new Gson().fromJson(response.getBody(), HashMap.class));
 				}
-				
+			
 				return resultEntity;
 			})
-			.fail(e -> this.produceFail(e))
+			.fail(e -> this.produceFail((Exception)e) )
 			.exec();
 	}
 
