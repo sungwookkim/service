@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -91,8 +92,8 @@ public class ResourcesConfig extends ResourceServerConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 				.authorizeRequests()
-				.antMatchers("/member/signUpdate").hasRole("USER")
-				.antMatchers("/member/authTest").hasRole("USER")
+				.antMatchers(HttpMethod.PUT, "/api/member/sign").hasRole("USER")
+				.antMatchers("/api/member/authTest").hasRole("USER")
 				.anyRequest()
 				.permitAll();
 	}

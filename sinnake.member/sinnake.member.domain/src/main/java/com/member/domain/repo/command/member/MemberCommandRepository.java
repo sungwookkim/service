@@ -15,10 +15,10 @@ import com.member.domain.entity.member.Member;
 @Repository
 public class MemberCommandRepository {
 
-	@PersistenceContext
-	EntityManager em;
+	@PersistenceContext(unitName="memberEntityManager")
+	EntityManager memberEntityManagerFactory;
 	
 	public void save(Member member) {
-		em.persist(member);
+		memberEntityManagerFactory.persist(member);
 	}
 }

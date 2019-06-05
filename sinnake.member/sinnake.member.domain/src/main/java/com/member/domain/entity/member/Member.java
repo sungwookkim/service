@@ -141,9 +141,9 @@ public class Member {
 			.ifPresent(m -> memberAttempts.setMember(this));
 	}
 	
-	/***********/
+	/********/
 	/* 프로세스*/
-	/***********/
+	/********/
 	/**
 	 * 회원가입 프로세스
 	 * 

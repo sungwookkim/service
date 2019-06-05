@@ -40,6 +40,7 @@ public abstract class TokenProduce<T> {
 	public ResultEntity<T> produce(Supplier<LinkedMultiValueMap<String ,String>> tokenPostParam) {
 
 		return new RestProcess<T>()
+			.throwUsed()
 			.call(() -> {
 				ResponseEntity<String> response = this.tokenPost(tokenPostParam);
 				ResultEntity<T> resultEntity = this.produceCall(response);

@@ -17,8 +17,8 @@ import com.member.domain.entity.member.Member;
 @Repository
 public class MemberReadRepository {
 
-	@PersistenceContext
-	EntityManager em;
+	@PersistenceContext(unitName="memberEntityManager")
+	EntityManager memberEntityManagerFactory;
 	
 	/**
 	 * 회원 ID로 회원 조회
@@ -28,7 +28,9 @@ public class MemberReadRepository {
 	 * @return 조회 결과 값
 	 */
 	public List<Member> findName(String userName) {
-		return em.createQuery("SELECT m FROM member m WHERE m.userName = :userName", Member.class)
+		String jpqlQuery = "SELECT m FROM member m WHERE m.userName = :userName";
+		
+		return memberEntityManagerFactory.createQuery(jpqlQuery, Member.class)
 			.setParameter("userName", userName)
 			.getResultList();
 	}

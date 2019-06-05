@@ -79,6 +79,7 @@ public abstract class TokenRefresh<T> {
 					});
 
 				new RestProcess<ResponseEntity<T>>()
+					.throwUsed()
 					.call(() -> {
 						ResponseEntity<String> response = this.tokenPost(postVal, userName);
 						ResultEntity<ResponseEntity<T>> resultEntity = this.refreshCall(response);
@@ -95,8 +96,18 @@ public abstract class TokenRefresh<T> {
 				this.requestContext.setSendZuulResponse(false);
 				this.requestContext.setRouteHost(null);
 				
-				this.requestContext.setResponseStatusCode(200);
-				this.requestContext.setResponseBody(new ResultEntity<String>(String.valueOf(statusCode), "").toString());					
+				this.requestContext.setResponseStatusCode(417);
+				
+				switch(statusCode) {
+					case -996 :
+						this.requestContext.setResponseBody(convertToken.get("data").toString());
+						break;
+					default : 
+						this.requestContext.setResponseBody(new ResultEntity<String>(String.valueOf(statusCode), "").toString());
+						break;
+				}
+
+									
 			} else if(statusCode == 0) {
 				this.requestContext.addZuulRequestHeader("authorization", "bearer " + accessToken);
 			}

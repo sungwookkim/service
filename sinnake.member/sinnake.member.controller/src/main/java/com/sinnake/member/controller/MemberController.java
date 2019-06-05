@@ -21,7 +21,7 @@ import com.sinnake.entity.ResultEntity;
 import util.PresentationProcess;
 
 @RestController
-@RequestMapping(value="/member")
+@RequestMapping(value="/api/member")
 public class MemberController {
 
 	private MemberService memberService;
@@ -35,7 +35,7 @@ public class MemberController {
 		, consumes = {
 			MediaType.APPLICATION_JSON_VALUE
 		}
-		, value = "/signUpdate")
+		, value = "/sign")
 	public ResponseEntity<ResultEntity<Member>> signUpdate(@RequestBody Map<String, String> reqBody, Principal principal) throws Exception {
 
 		final String userName = principal.getName();
@@ -65,7 +65,7 @@ public class MemberController {
 			.exec();
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/signUp")
+	@RequestMapping(method = RequestMethod.POST, value = "/sign")
 	public ResponseEntity<ResultEntity<Member>> signUp(HttpServletRequest req) throws Exception {
 		final String userName = req.getParameter("userName");
 		final String password = req.getParameter("password");

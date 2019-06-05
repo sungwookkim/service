@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -111,6 +112,7 @@ public class TokenRefreshDefault extends TokenRefresh<String> {
 		int commonStatusCode = -999;
 		
 		return new RestProcess<HashMap<String, Object>>()
+			.throwUsed()
 			.call(() -> {
 				HashMap<String, Object> rtn = new HashMap<>();
 				rtn.put("statusCode", commonStatusCode);
@@ -136,12 +138,17 @@ public class TokenRefreshDefault extends TokenRefresh<String> {
 				return new ResultEntity<HashMap<String,Object>>(ResultEntity.ResultCode.SUCESS.getCode(), rtn);
 			})
 			.fail(e -> {
-				e.printStackTrace();
-
 				HashMap<String, Object> rtn = new HashMap<>();
 				rtn.put("statusCode", commonStatusCode);
 				rtn.put("data", "");
 				
+				if(e instanceof OAuth2Exception) {
+					rtn.put("statusCode", -996);
+					rtn.put("data", "{" + ((OAuth2Exception)e).getSummary() + "}");
+				} else {
+					e.printStackTrace();	
+				}
+
 				return new ResultEntity<>(ResultEntity.ResultCode.FAIL.getCode(), rtn);
 			})
 			.exec()

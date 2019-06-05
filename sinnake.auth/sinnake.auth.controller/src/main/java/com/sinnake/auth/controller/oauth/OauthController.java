@@ -22,7 +22,7 @@ import util.PresentationProcess;
  * @author sinnakeWEB
  */
 @RestController
-@RequestMapping(value = "/oauth")
+@RequestMapping(value = "/api/oauth")
 public class OauthController {
 
 	private OauthService oauthService;
@@ -39,7 +39,7 @@ public class OauthController {
 	 * @param param 저장 요청 값
 	 * @return 응답 값
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/saveOauth")
+	@RequestMapping(method = RequestMethod.POST, value = "/oauth")
 	public ResponseEntity<ResultEntity<SpringOauth>> oauthSave(@RequestBody Map<String, String> param) {
 		
 		final String client_id = param.get("client_id");
@@ -56,7 +56,7 @@ public class OauthController {
 	 * @param param 삭제 요청 값
 	 * @return 응답 값
 	 */
-	@RequestMapping(method = RequestMethod.DELETE, value = "/delOauth")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/oauth")
 	public ResponseEntity<ResultEntity<SpringOauth>> delOauth(@RequestBody Map<String, String> param) {
 	
 		final String client_id = param.get("client_id");

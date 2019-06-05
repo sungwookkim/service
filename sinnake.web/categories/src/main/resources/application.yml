@@ -1,0 +1,52 @@
+server:
+  port: 8082
+  tomcat:
+    max-connections: 15000
+  
+spring:
+  jackson:
+    serialization:            
+      write-dates-as-timestamps: true
+      write-date-timestamps-as-nanoseconds: false
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: categories
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
+        url:
+        - http://192.168.0.40:9090
+    
+eureka:
+  instance:
+    hostname: localhost
+    status-page-url: http://${eureka.instance.hostname}:${server.port}/info
+    health-check-url-path: http://${eureka.instance.hostname}:${server.port}/health
+  client: 
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://192.168.0.45:8761/eureka/
+
+management:
+  health:
+    db:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+
+logging:
+  file: ./logs/categories/categoriesLogFile.txt
+  
+httppool:
+  maxPerRoute: 100
+  maxTotal: 1000
+  connectionRequestTimeout: 5000
+  connectTimeout: 5000
+  socketTimeout: 5000

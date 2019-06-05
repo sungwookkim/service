@@ -24,7 +24,7 @@ import com.member.domain.entity.member.enumPack.MemberRoleEnum;
 @Entity(name = "user_roles")
 public class MemberRole {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "member_id", unique = true)
+	@JoinColumn(name = "member_id")
 	Member member;
 	
 	@Id

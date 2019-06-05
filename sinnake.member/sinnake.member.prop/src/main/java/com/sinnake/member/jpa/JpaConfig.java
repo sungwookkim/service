@@ -2,6 +2,7 @@ package com.sinnake.member.jpa;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,11 @@ public class JpaConfig {
 	 * @return {@link JpaTransactionManager}
 	 */
 	@Bean("memberTransactionManager")
-	public JpaTransactionManager transactionManager() {
+	public JpaTransactionManager transactionManager(EntityManagerFactory memberEntityManagerFactory) {
 		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
 		jpaTransactionManager.setDataSource(this.memberDataSource);
-		
+		jpaTransactionManager.setEntityManagerFactory(memberEntityManagerFactory);
+
 		return jpaTransactionManager;
 	}
 	
@@ -61,14 +63,15 @@ public class JpaConfig {
 	 * @return {@link LocalContainerEntityManagerFactoryBean}
 	 */
 	@Bean("memberEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	public LocalContainerEntityManagerFactoryBean memberEntityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		Properties jpaProperties = new Properties();
 
 		localContainerEntityManagerFactoryBean.setDataSource(this.memberDataSource);
 		localContainerEntityManagerFactoryBean.setPackagesToScan("com.member.domain");
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-		
+		localContainerEntityManagerFactoryBean.setPersistenceUnitName("memberEntityManager");
+
 		jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 		jpaProperties.setProperty("hibernate.show_sql", "false");
 		jpaProperties.setProperty("hibernate.format_sql", "true");

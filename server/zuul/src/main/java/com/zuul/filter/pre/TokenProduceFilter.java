@@ -28,7 +28,7 @@ public class TokenProduceFilter extends ZuulFilter {
 	private TokenControlConfig tokenControlConfig;
 
 	private static final String GRANT_TYPE = "password";
-	private static final String LOGIN_URL = "/member/login";
+	private static final String LOGIN_URL = "/api/member/login";
 	
 	@Autowired
 	public TokenProduceFilter(RestTemplate restTemplate

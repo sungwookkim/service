@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+    <comment>properties</comment>
+	<!-- 서버 관련 프로퍼티 내용 시작 -->
+    
+	<!-- 서버 유형(local, dev, stage, real) -->
+    <entry key="categories.type.propertie">local</entry>
+
+    <!-- DB 종류 -->
+ 	<entry key="categories.dbType.propertie">mysql</entry> 
+ 	
+ 	<!-- 서버유형별 프로퍼티 파일 -->
+ 	<entry key="categories.serverPropFile.propertie">categoriesProperties/server/server_${serverType}_properties.xml</entry>  	
+
+ 	<!-- 서버유형별 DB 종류 프로퍼티 파일-->
+ 	<entry key="categories.dbPropFile.propertie">categoriesProperties/db/${serverDb}/db_${serverType}_${serverDb}_properties.xml</entry>
+
+	<!-- 서버 관련 프로퍼티 내용 끝 -->
+</properties>

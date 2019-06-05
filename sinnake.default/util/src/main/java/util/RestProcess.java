@@ -11,7 +11,15 @@ public class RestProcess<T> {
 	Supplier<ResultEntity<T>> fail = null;	
 	Function<Exception, ResultEntity<T>> funcFail = null;
 	
+	private boolean enableThrow = true;
+
 	public RestProcess() { }
+	
+	public RestProcess<T> throwUsed() {
+		this.enableThrow = !this.enableThrow;
+
+		return this;
+	}
 	
 	public RestProcess<T> call(Supplier<ResultEntity<T>> call) {
 		this.call = call;
@@ -43,9 +51,11 @@ public class RestProcess<T> {
 					return Optional.ofNullable(this.fail)
 						.map(Supplier::get)
 						.get();
-				});					
+				});
 
-			//throw e;
+			if(this.enableThrow) {
+				throw e;	
+			}
 		}
 		
 		return rtn;

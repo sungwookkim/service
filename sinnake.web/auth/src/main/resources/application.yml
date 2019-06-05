@@ -34,6 +34,9 @@ eureka:
       defaultZone: http://192.168.0.45:8761/eureka/
 
 management:
+  health:
+    db:
+      enabled: false
   endpoints:
     web:
       exposure:
