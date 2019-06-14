@@ -52,7 +52,7 @@ public class SignUpImpl implements SignUp {
 	public ResultEntity<Member> process() {
 		
 		ResultEntity<Member> resultEntity = validate();
-		if(!"1".equals(resultEntity.getCode())) {
+		if(!resultEntity.sucess()) {
 			return resultEntity; 
 		}
 		
@@ -114,7 +114,7 @@ public class SignUpImpl implements SignUp {
 			return new ResultEntity<>("-5");
 		}
 		
-		return new ResultEntity<>("1");
+		return new ResultEntity<>(ResultEntity.sucessCodeString());
 	}
 	
 	/**

@@ -46,7 +46,7 @@ public abstract class TokenProduce<T> {
 				ResultEntity<T> resultEntity = this.produceCall(response);
 				String statusCode = resultEntity.getCode();
 				
-				if("200".equals(statusCode) || ResultEntity.ResultCode.SUCESS.getCode().equals(statusCode)) {
+				if("200".equals(statusCode) || resultEntity.sucess()) {
 					this.tokenSave(new Gson().fromJson(response.getBody(), HashMap.class));
 				}
 			

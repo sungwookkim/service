@@ -96,9 +96,10 @@ public class Member {
 	public Date getRegDate() { return regDate; }
 
 	public void setPassword(String password) { this.password = password; }
-	/********************/
+	
+	/**************/
 	/* 연관 편의 메소드 */
-	/********************/
+	/*************/
 	public Set<MemberDetail> getMemberDetail() { return memberDetails; }
 	public void addMemberDetail(MemberDetail memberDetail) {
 		Optional.ofNullable(this.memberDetails)

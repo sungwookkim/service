@@ -2,6 +2,7 @@ package com.sinnake.categories.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +29,19 @@ public class CategoriesController {
 		this.categoriesService = categoriesService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/add/{parentId}")	
+	@RequestMapping(method = RequestMethod.GET, value = "/")
+	public ResponseEntity<ResultEntity<Map<Long, List<Map<String, Object>>>>> get() {
+		
+		return new PresentationProcess<Map<Long, List<Map<String, Object>>>>()
+			.process(() -> {
+				
+				return new ResultEntity<>(ResultEntity.sucessCodeString()
+					, this.categoriesService.findAllCategories());
+			})
+			.exec();
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/{parentId}")	
 	public ResponseEntity<ResultEntity<Long>> add(@PathVariable Long parentId, HttpServletRequest req) {
 		
 		return new PresentationProcess<Long>()
@@ -37,43 +50,42 @@ public class CategoriesController {
 
 				return this.categoriesService.categoriesAdd(categoryName, parentId);
 			})
-			.exception(() -> {
-				return new ResultEntity<>("-99");
-			})
 			.exec();
-	}	
+	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/get")
-	public ResponseEntity<ResultEntity<Map<Long, List<Map<String, Object>>>>> get() {
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")	
+	public ResponseEntity<ResultEntity<Map<String, Object>>> update(@PathVariable Long id, HttpServletRequest req) {
 		
-		return new PresentationProcess<Map<Long, List<Map<String, Object>>>>()
+		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
-				
-				return new ResultEntity<>(ResultEntity.ResultCode.SUCESS.getCode()
-					, this.categoriesService.findAllCategories());
+				Long parentId = Optional.ofNullable(req.getParameter("parentId"))
+					.map(p -> Long.parseLong(p))
+					.orElse(-1L);
+
+				return this.categoriesService.categoriesUpdate(id, parentId, req.getParameter("categoryName"));				
 			})
 			.exec();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/get/{categoryId}")
+	@RequestMapping(method = RequestMethod.GET, value = "/{categoryId}")
 	public ResponseEntity<ResultEntity<Map<String, Object>>> get(@PathVariable Long categoryId) {
 		
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
 				
-				return new ResultEntity<>(ResultEntity.ResultCode.SUCESS.getCode()
+				return new ResultEntity<>(ResultEntity.sucessCodeString()
 					, this.categoriesService.findCategories(categoryId));
 			})
 			.exec();						
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/get/child/{parentId}")
+	@RequestMapping(method = RequestMethod.GET, value = "/child/{parentId}")
 	public ResponseEntity<ResultEntity<List<Map<String, Object>>>> childGet(@PathVariable Long parentId) {
 		
 		return new PresentationProcess<List<Map<String, Object>>>()
 			.process(() -> {
 
-				return new ResultEntity<>(ResultEntity.ResultCode.SUCESS.getCode()
+				return new ResultEntity<>(ResultEntity.sucessCodeString()
 					, this.categoriesService.findChildCategories(parentId));
 			})
 			.exec();

@@ -92,7 +92,10 @@ public class ResourcesConfig extends ResourceServerConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/categories/add/*").hasRole("ADMIN")				
+				.antMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.POST, "/api/searchOption/kind").hasRole("ADMIN")
+				.antMatchers(HttpMethod.PUT, "/api/searchOption/kind/**").hasRole("ADMIN")
 				.anyRequest()
 				.permitAll();
 	}

@@ -84,7 +84,7 @@ public abstract class TokenRefresh<T> {
 						ResponseEntity<String> response = this.tokenPost(postVal, userName);
 						ResultEntity<ResponseEntity<T>> resultEntity = this.refreshCall(response);
 						
-						if(resultEntity.getCode().equals(ResultEntity.ResultCode.SUCESS.getCode()) ) {
+						if(resultEntity.sucess() ) {
 							this.tokenSave(new Gson().fromJson(response.getBody(), HashMap.class));
 						}
 						

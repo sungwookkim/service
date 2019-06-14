@@ -57,7 +57,7 @@ public class TokenRefreshDefault extends TokenRefresh<String> {
 
 		this.getRequestContext().addZuulRequestHeader("authorization", "bearer " + accessToken);
 		
-		return new ResultEntity<>(ResultEntity.ResultCode.SUCESS.getCode(), response);
+		return new ResultEntity<>(ResultEntity.sucessCodeString(), response);
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class TokenRefreshDefault extends TokenRefresh<String> {
 			this.getRequestContext().setResponseBody(errBody);
 		}
 		
-		return new ResultEntity<>(ResultEntity.ResultCode.FAIL.getCode());
+		return new ResultEntity<>(ResultEntity.failCodeString());
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class TokenRefreshDefault extends TokenRefresh<String> {
 					rtn.put("data", new DefaultAccessTokenConverter().convertAccessToken(token, authentication));				
 				}
 				
-				return new ResultEntity<HashMap<String,Object>>(ResultEntity.ResultCode.SUCESS.getCode(), rtn);
+				return new ResultEntity<HashMap<String,Object>>(ResultEntity.sucessCodeString(), rtn);
 			})
 			.fail(e -> {
 				HashMap<String, Object> rtn = new HashMap<>();
@@ -149,7 +149,7 @@ public class TokenRefreshDefault extends TokenRefresh<String> {
 					e.printStackTrace();	
 				}
 
-				return new ResultEntity<>(ResultEntity.ResultCode.FAIL.getCode(), rtn);
+				return new ResultEntity<>(ResultEntity.failCodeString(), rtn);
 			})
 			.exec()
 			.getResult();

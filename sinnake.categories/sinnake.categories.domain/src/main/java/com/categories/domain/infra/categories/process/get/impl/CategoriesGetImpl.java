@@ -8,12 +8,13 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.categories.domain.entity.Categories;
+import com.categories.domain.entity.categories.Categories;
+import com.categories.domain.infra.categories.process.get.CategoriesGet;
 import com.google.common.base.Function;
 
 import commonInterface.CommonGet;
 
-public class CategoriesGetImpl implements CommonGet {
+public class CategoriesGetImpl implements CategoriesGet {
 	
 	public CategoriesGetImpl() {}
 	
@@ -27,7 +28,7 @@ public class CategoriesGetImpl implements CommonGet {
 	 */
 	public Map<String, Object> findCategories(Function<Long, Categories> findCategories, Long id) {
 
-		return Optional.ofNullable(this.<Categories, Map<String, Object>>convert(findCategories.apply(id)
+		return Optional.ofNullable(CommonGet.<Categories, Map<String, Object>>convert(findCategories.apply(id)
 					, CategoriesGetImpl::convertProcess))
 				.orElseGet(HashMap::new);
 	}
@@ -42,7 +43,7 @@ public class CategoriesGetImpl implements CommonGet {
 	 */
 	public List<Map<String, Object>> findChildCategories(Function<Long, List<Categories>> findChildCategories, Long parentId) {			
 		
-		return Optional.ofNullable(this.<Categories, Map<String, Object>>convert(findChildCategories.apply(parentId)
+		return Optional.ofNullable(CommonGet.<Categories, Map<String, Object>>convert(findChildCategories.apply(parentId)
 					, CategoriesGetImpl::convertProcess))
 				.orElseGet(ArrayList::new);
 	}
@@ -59,15 +60,15 @@ public class CategoriesGetImpl implements CommonGet {
 		
 		return Optional.ofNullable(findAllCategories.get())
 			.map(value -> {
-				return value.stream()
-					.collect(Collectors.groupingBy(Categories::getParentId))
-					.entrySet().stream()
-						.collect(Collectors.toMap(Map.Entry::getKey
-							, v -> this.<Categories, Map<String, Object>>convert(v.getValue(), CategoriesGetImpl::convertProcess) ));				
+				
+				return CommonGet.<Long, Map<String, Object>, Categories>convert(value.stream()
+						.collect(Collectors.groupingBy(Categories::getParentId))
+					, CategoriesGetImpl::convertProcess);
 			})
 			.orElseGet(HashMap::new);
 	
 	}
+
 	/**
 	 * 조회된 결과를 기본으로 뱐환 시켜주는 메소드
 	 * 

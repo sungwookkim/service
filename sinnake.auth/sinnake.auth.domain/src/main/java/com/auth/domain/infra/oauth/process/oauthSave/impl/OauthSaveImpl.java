@@ -29,7 +29,7 @@ public class OauthSaveImpl implements OauthSave {
 	public ResultEntity<SpringOauth> process() {
 		ResultEntity<SpringOauth> resultEntity = this.validate();
 		
-		if("1".equals(resultEntity.getCode()) ) {
+		if(resultEntity.sucess()) {
 			resultEntity = new ResultEntity<>(resultEntity.getCode(), this.springOauth);
 		} else {
 			resultEntity = new ResultEntity<>(resultEntity.getCode());
@@ -46,7 +46,7 @@ public class OauthSaveImpl implements OauthSave {
 	 */
 	@Override
 	public ResultEntity<SpringOauth> validate() {
-		ResultEntity<SpringOauth> resultEntity = new ResultEntity<>("1");
+		ResultEntity<SpringOauth> resultEntity = new ResultEntity<>(ResultEntity.sucessCodeString());
 
 		if(!new SinnakeValidate(this.springOauth.getClient_id())
 			.required().getValidResult()) {

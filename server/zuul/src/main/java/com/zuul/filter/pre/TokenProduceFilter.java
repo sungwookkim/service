@@ -89,8 +89,8 @@ public class TokenProduceFilter extends ZuulFilter {
 		requestContext.setSendZuulResponse(false);
 		requestContext.setRouteHost(null);
 		requestContext.setResponseStatusCode(Integer.parseInt(result.getCode()));
-		requestContext.setResponseBody(new ResultEntity<>("200".equals(result.getCode()) ? ResultEntity.ResultCode.SUCESS.getCode() 
-			: ResultEntity.ResultCode.FAIL.getCode()
+		requestContext.setResponseBody(new ResultEntity<>("200".equals(result.getCode()) ? ResultEntity.sucessCodeString() 
+			: ResultEntity.failCodeString()
 			, result.getResult()).toString());
 		
 		return null;

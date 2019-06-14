@@ -79,7 +79,7 @@ public class OauthDelImpl implements OauthDel {
 			.get();
 			
 		return Optional.ofNullable(springOauths)
-			.map(so -> new ResultEntity<>("1", so))
+			.map(so -> new ResultEntity<>(ResultEntity.sucessCodeString(), so))
 			.orElseGet(() -> new ResultEntity<>("-2"));
 	}
 }

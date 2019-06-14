@@ -1,5 +1,6 @@
 package com.categories.domain.service.command.categories;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,11 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.categories.domain.entity.Categories;
+import com.categories.domain.entity.categories.Categories;
 import com.categories.domain.repo.command.categories.CategoriesCommandRepository;
 import com.categories.domain.repo.read.categories.CategoriesReadRepository;
 import com.sinnake.entity.ResultEntity;
 
+import commonInterface.CommonGet;
 import util.RestProcess;
 
 /**
@@ -48,30 +50,75 @@ public class CategoriesService {
 		
 		return new RestProcess<Long>()
 			.call(() -> {
-				ResultEntity<Categories> categories = new Categories().add(categoryName
-					, parentId
-					, this.categoriesReadRepository::findId);
+				ResultEntity<Categories> categories = new Categories(categoryName, parentId).add(this.categoriesReadRepository::findId);
 				
-				String code = categories.getCode();
-				
-				if("1".equals(code)) {
+				if(categories.sucess()) {
 					this.categoriesCommandRepository.add(categories.getResult());
 
-					return new ResultEntity<>(ResultEntity.ResultCode.SUCESS.getCode()
+					return new ResultEntity<>(ResultEntity.sucessCodeString()
 						,categories.getResult().getId());
 				}
 								
-				return new ResultEntity<>(ResultEntity.ResultCode.FAIL.getCode()
-					, Long.parseLong(code) );
+				return new ResultEntity<>(ResultEntity.failCodeString()
+					, Long.parseLong(categories.getCode()) );
 			})
 			.fail(e -> {
 				e.printStackTrace();
 				
-				return new ResultEntity<>(ResultEntity.ResultCode.FAIL.getCode(), -99L);
+				return new ResultEntity<>(ResultEntity.failCodeString(), -99L);
 			})
 			.exec();
 	}
 
+	/**
+	 * 카테고리 수정 서비스
+	 * 
+	 * @author sinnakeWEB
+	 * @param id 수정할 카테고리 Seq 값
+	 * @param parentId 수정할 상위 카테고리 Seq 값
+	 * @param categoryName 수정할 카테고리 이름 값
+	 * @return 수정된 Categories 객체를 Map으로 변환해서 반환
+	 */
+	@Transactional(transactionManager = "categoriesTransactionManager",  propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public ResultEntity<Map<String, Object>> categoriesUpdate(Long id, Long parentId, String categoryName) {
+		
+		return new RestProcess<Map<String, Object>>()
+			.call(() -> {
+				ResultEntity<Categories> resultEntity = new Categories(categoryName, parentId).update(
+					i -> this.categoriesReadRepository.findId(i)
+					, () -> this.categoriesReadRepository.findId(id));
+					
+				if(!resultEntity.sucess()) {
+					return new ResultEntity<>(resultEntity.getCode());
+				} 
+
+				Categories categories = resultEntity.getResult();
+				
+				this.categoriesCommandRepository.add(categories);
+
+				return new ResultEntity<>(resultEntity.getCode()
+					, CommonGet.<Categories, Map<String, Object>>convert(categories
+						, c -> {
+							HashMap<String, Object> rtn = new HashMap<>();
+							
+							rtn.put("id", c.getId());
+							rtn.put("categoryName", c.getCategoryName());
+							rtn.put("categoryName", c.getCategoryName());
+							rtn.put("parentId", c.getParentId());
+							rtn.put("regDate", c.getRegDate());
+							
+							return rtn;
+						}));
+			})
+			.fail(e -> {
+				e.printStackTrace();
+				
+				return new ResultEntity<Map<String,Object>>(ResultEntity.failCodeString());
+			})
+			.exec();
+
+	}
+	
 	/**
 	 * 카테고리 조회 서비스
 	 * 

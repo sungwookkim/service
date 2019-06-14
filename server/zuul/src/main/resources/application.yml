@@ -50,7 +50,11 @@ zuul:
       path: /api/categories/**
       service-id: categories
       strip-prefix: false
-       
+    searchOption:
+      path: /api/searchOption/**
+      service-id: categories
+      strip-prefix: false
+             
 hystrix:
   threadpool:
     default:
@@ -103,7 +107,19 @@ categories:
     MaxTotalHttpConnections: 500
     MaxConnectionsPerHost: 300
     MaxAutoRetries: 1
-      
+
+searchOption:
+  ribbon:
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NFLoadBalancerPingInterval: 1
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    ServerListRefreshInterval : 3000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 300
+    MaxAutoRetries: 1
+    
 management:
   endpoints:
     web:

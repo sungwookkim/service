@@ -79,12 +79,10 @@ public class MemberService {
 			, detailAddress
 			, postCode
 			, memberReadRepository::findName);
-		
-		String code = resultEntity.getCode();
 
-		if("1".equals(resultEntity.getCode())) {
+		if(resultEntity.sucess()) {
 			this.memberCommandRepository.save(resultEntity.getResult());
-			resultEntity = new ResultEntity<>(code);
+			resultEntity = new ResultEntity<>(resultEntity.getCode());
 		}
 		
 		return resultEntity;
@@ -137,7 +135,7 @@ public class MemberService {
 						throw new RuntimeException();
 					}
 
-					return new ResultEntity<>(ResultEntity.ResultCode.SUCESS.getCode());
+					return new ResultEntity<>(ResultEntity.sucessCodeString());
 				}).fail(() -> {
 					HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(new HashMap<String ,String>() {
 						private static final long serialVersionUID = 1L;
@@ -152,7 +150,7 @@ public class MemberService {
 						, httpEntity
 						, String.class);
 					
-					return new ResultEntity<>(ResultEntity.ResultCode.FAIL.getCode());
+					return new ResultEntity<>(ResultEntity.failCodeString());
 				}).exec();
 
 		}

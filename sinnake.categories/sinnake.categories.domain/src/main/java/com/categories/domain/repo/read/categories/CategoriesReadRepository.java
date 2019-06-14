@@ -7,10 +7,10 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import com.categories.domain.entity.Categories;
+import com.categories.domain.entity.categories.Categories;
 
 /**
- * 카테고리 Repository
+ * 카테고리 Repository 클래스 (R 관련 클래스)
  * 
  * @author sinnakeWEB
  */

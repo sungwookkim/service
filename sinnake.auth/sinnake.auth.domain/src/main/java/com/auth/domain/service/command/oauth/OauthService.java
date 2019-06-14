@@ -42,11 +42,10 @@ public class OauthService {
 	public ResultEntity<SpringOauth> oauthSave(String client_id) {
 
 		ResultEntity<SpringOauth> resultEntity = new SpringOauth(client_id, "ROLE_USER").oauthSave();
-		
-		String code = resultEntity.getCode();
-		if("1".equals(code)) {
+
+		if(resultEntity.sucess()) {
 			this.oauthCommandRepository.save(resultEntity.getResult());
-			resultEntity = new ResultEntity<>(code);
+			resultEntity = new ResultEntity<>(resultEntity.getCode());
 		}
 		
 		return resultEntity;
@@ -64,11 +63,10 @@ public class OauthService {
 
 		OauthDel oauthDel = new OauthDelImpl(client_id, this.oauthReadRepository::findId);
 		ResultEntity<SpringOauth> resultEntity = SpringOauth.oauthDel(oauthDel);
-		
-		String code = resultEntity.getCode();
-		if("1".equals(code)) {
+
+		if(resultEntity.sucess()) {
 			this.oauthCommandRepository.remove(resultEntity.getResult());
-			resultEntity = new ResultEntity<>(code);
+			resultEntity = new ResultEntity<>(resultEntity.getCode());
 		}
 		
 		return resultEntity;
