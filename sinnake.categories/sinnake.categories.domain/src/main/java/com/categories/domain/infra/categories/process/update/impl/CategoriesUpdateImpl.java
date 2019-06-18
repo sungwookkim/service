@@ -1,17 +1,26 @@
 package com.categories.domain.infra.categories.process.update.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.categories.domain.entity.categories.Categories;
+import com.categories.domain.entity.searchOption.SearchOptionKind;
+import com.categories.domain.entity.searchOption.SearchOptionList;
 import com.categories.domain.infra.categories.process.add.impl.CategoriesAddImpl;
 import com.categories.domain.infra.categories.process.update.CategoriesUpdate;
 import com.sinnake.entity.ResultEntity;
 
+import util.SinnakeValidate;
+
 public class CategoriesUpdateImpl extends CategoriesAddImpl implements CategoriesUpdate {
 
 	protected Supplier<Categories> findCategory;
+	protected Function<Long, SearchOptionList> findSearchOptionList;
 	
 	public CategoriesUpdateImpl() {}
 	
@@ -41,27 +50,25 @@ public class CategoriesUpdateImpl extends CategoriesAddImpl implements Categorie
 			.map(f -> {
 				return Optional.ofNullable(f.get())
 					.map(c -> new ResultEntity<>(ResultEntity.sucessCodeString(), c))
-					.orElse(new ResultEntity<>("-2"));					
+					.orElse(new ResultEntity<>("-2"));
 			})
 			.orElseThrow(RuntimeException::new);
 
-		if(!resultEntity.sucess()) {
-			return new ResultEntity<>(resultEntity.getCode());
-		}
+		if(!resultEntity.sucess()) { return resultEntity; }
 		
 		Categories categories = resultEntity.getResult();
-		
 		categories.setCategoryName(this.categoryName);
 		categories.setRegDate(new Date());
 
 		resultEntity = this.updateParentId(categories);
-		if(!resultEntity.sucess()) {
-			return new ResultEntity<Categories>(resultEntity.getCode());
-		}
+		if(!resultEntity.sucess()) { return resultEntity; }
+
+		resultEntity = this.addSearchOptioinList(categories);
+		if(!resultEntity.sucess()) { return resultEntity; }
 
 		return new ResultEntity<>(code, categories);
 	}
-	
+
 	/**
 	 * 수정할 카테고리 조회 객체 설정
 	 * 
@@ -91,10 +98,8 @@ public class CategoriesUpdateImpl extends CategoriesAddImpl implements Categorie
 					categories.setParentId(this.parentId);
 					
 					return new ResultEntity<>(ResultEntity.sucessCodeString()
-						, categories);					
-				}
-
-				if(Optional.ofNullable(this.findParentCategories.apply(this.parentId))
+						, categories);
+				} else if(Optional.ofNullable(this.findParentCategories.apply(this.parentId))
 					.map(c -> c.getId())
 					.orElse(-1L) <= 0) {
 					
@@ -108,4 +113,57 @@ public class CategoriesUpdateImpl extends CategoriesAddImpl implements Categorie
 			})
 			.orElse(new ResultEntity<>(ResultEntity.sucessCodeString() ));
 	}
+	
+	@Override
+	public ResultEntity<Categories> addSearchOptioinList(Categories categories) {
+
+		List<SearchOptionList> searchOptionLists = Optional.ofNullable(categories.getSearchOptionList())
+			.orElseGet(ArrayList::new);
+		
+		if(searchOptionLists.size() == 0) { return super.addSearchOptioinList(categories); }
+
+		if(Optional.ofNullable(this.searchOptionList)
+			.filter(s -> s.size() > 0).isPresent()) {
+
+			for(Map<String, String> s : this.searchOptionList) {
+				ResultEntity<SearchOptionKind> resultEntity = this.searchOptionListValidate(s);
+				
+				if(!resultEntity.sucess()) { return new ResultEntity<>(resultEntity.getCode()); }
+				
+				String searchOptionName = s.get("searchOptionName");
+				String type = s.get("type");
+				SearchOptionKind searchOptionKind = resultEntity.getResult();
+				Long id = Long.parseLong(s.get("id"));
+				
+				if(id == 0L) {
+					this.setSearchOptionList(categories, searchOptionName, type, searchOptionKind);
+				} else if(!searchOptionLists.stream()
+					.filter(sol -> id == sol.getId())
+					.map(sol -> {
+						sol.setSearchOptionName(searchOptionName);
+						sol.setType(type);
+						sol.setSearchOptionKind(searchOptionKind);
+						sol.setRegDate(new Date());
+						
+						return sol;
+					})
+					.findAny()
+					.isPresent()) {
+
+					return new ResultEntity<>("-15");
+				};
+			}
+		}
+		
+		return new ResultEntity<>(ResultEntity.sucessCodeString(), categories);
+	}
+	
+	@Override
+	public ResultEntity<SearchOptionKind> searchOptionListValidate(Map<String, String> s) {
+		if(!new SinnakeValidate(s.get("id")).required().getValidResult()) {
+			return new ResultEntity<>("-14");
+		}
+		
+		return super.searchOptionListValidate(s);
+	}	
 }

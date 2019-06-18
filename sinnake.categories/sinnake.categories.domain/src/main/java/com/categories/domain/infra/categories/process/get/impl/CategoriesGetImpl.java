@@ -9,6 +9,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.categories.domain.entity.categories.Categories;
+import com.categories.domain.entity.searchOption.SearchOptionKind;
+import com.categories.domain.entity.searchOption.SearchOptionList;
 import com.categories.domain.infra.categories.process.get.CategoriesGet;
 import com.google.common.base.Function;
 
@@ -66,7 +68,6 @@ public class CategoriesGetImpl implements CategoriesGet {
 					, CategoriesGetImpl::convertProcess);
 			})
 			.orElseGet(HashMap::new);
-	
 	}
 
 	/**
@@ -83,7 +84,22 @@ public class CategoriesGetImpl implements CategoriesGet {
 		category.put("categoryName", c.getCategoryName());
 		category.put("parentId", c.getParentId());
 		category.put("regDate", c.getRegDate());
-		
+		category.put("searchOptionList", CommonGet.<SearchOptionList, Map<String, Object>>convert(c.getSearchOptionList(), s -> {
+			SearchOptionKind kind = s.getSearchOptionKind();
+			HashMap<String, Object> sok = new HashMap<>();
+			sok.put("id", kind.getId());
+			sok.put("searchOptionName", kind.getSearchOptionName());
+			sok.put("regDate", kind.getRegDate());
+			
+			HashMap<String, Object> sol = new HashMap<>();
+			sol.put("id", s.getId());
+			sol.put("regDate", s.getRegDate());
+			sol.put("searchOptionName", s.getSearchOptionName());
+			sol.put("type", s.getType());
+			sol.put("searchOptionKind", sok);
+
+			return sol;
+		}));
 		return category;
 	}
 }

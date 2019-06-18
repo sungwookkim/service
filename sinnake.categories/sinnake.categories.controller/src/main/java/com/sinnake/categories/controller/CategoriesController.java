@@ -2,7 +2,6 @@ package com.sinnake.categories.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.categories.domain.service.command.categories.CategoriesService;
@@ -41,28 +41,31 @@ public class CategoriesController {
 			.exec();
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/{parentId}")	
-	public ResponseEntity<ResultEntity<Long>> add(@PathVariable Long parentId, HttpServletRequest req) {
+	@RequestMapping(method = RequestMethod.POST, value = "/{parentId}")
+	public ResponseEntity<ResultEntity<Long>> add(@PathVariable Long parentId
+		, @RequestParam(value = "categoryName", required = true) String categoryName
+		, @RequestParam(value = "searchOptionList", required = false, defaultValue = "") String searchOptionList
+		, HttpServletRequest req) {
 		
 		return new PresentationProcess<Long>()
-			.process(() -> {
-				String categoryName = req.getParameter("categoryName").toString();
+			.process(() -> {				
 
-				return this.categoriesService.categoriesAdd(categoryName, parentId);
+				return this.categoriesService.categoriesAdd(categoryName, parentId, searchOptionList);
 			})
 			.exec();
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")	
-	public ResponseEntity<ResultEntity<Map<String, Object>>> update(@PathVariable Long id, HttpServletRequest req) {
-		
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public ResponseEntity<ResultEntity<Map<String, Object>>> update(@PathVariable Long id
+		, @RequestParam(value = "categoryName", required = true) String categoryName
+		, @RequestParam(value = "searchOptionList", required = false, defaultValue = "") String searchOptionList
+		, @RequestParam(value = "parentId", required = false, defaultValue = "-1L") Long parentId		
+		, HttpServletRequest req) {
+
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
-				Long parentId = Optional.ofNullable(req.getParameter("parentId"))
-					.map(p -> Long.parseLong(p))
-					.orElse(-1L);
-
-				return this.categoriesService.categoriesUpdate(id, parentId, req.getParameter("categoryName"));				
+				
+				return this.categoriesService.categoriesUpdate(id, parentId, categoryName, searchOptionList);				
 			})
 			.exec();
 	}

@@ -3,6 +3,7 @@ package com.categories.domain.entity.categories;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.categories.domain.entity.searchOption.SearchOptionKind;
 import com.categories.domain.entity.searchOption.SearchOptionList;
 import com.categories.domain.infra.categories.process.add.CategoriesAdd;
 import com.categories.domain.infra.categories.process.add.impl.CategoriesAddImpl;
@@ -114,10 +116,14 @@ public class Categories {
 	 * @return 생성 한 카테고리 객체 반환
 	 * @throws Exception 예외 발생
 	 */
-	public ResultEntity<Categories> add(Function<Long, Categories> findParentCategories) {
+	public ResultEntity<Categories> add(Function<Long, Categories> findParentCategories
+		, List<Map<String, String>> searchOptionList
+		, Function<Long, SearchOptionKind> findSearchOptionKind) {		
+
 		CategoriesAdd categoriesAdd = new CategoriesAddImpl();
 		categoriesAdd.pareintId(this.parentId, findParentCategories);
 		categoriesAdd.categoryName(this.categoryName);
+		categoriesAdd.searchOptionList(searchOptionList, findSearchOptionKind);
 
 		return this.add(categoriesAdd);
 	}
@@ -131,12 +137,15 @@ public class Categories {
 	 * @return 수정한 Categories 객체 반환
 	 */
 	public ResultEntity<Categories> update(Function<Long, Categories> findParentCategories
-		, Supplier<Categories> findCategory) {
+		, Supplier<Categories> findCategory
+		, List<Map<String, String>> searchOptionList
+		, Function<Long, SearchOptionKind> findSearchOptionKind) {
 		
 		CategoriesUpdate categoriesUpdate = new CategoriesUpdateImpl();
 		categoriesUpdate.findCategory(findCategory);
 		categoriesUpdate.categoryName(this.categoryName);
 		categoriesUpdate.pareintId(this.parentId, findParentCategories);
+		categoriesUpdate.searchOptionList(searchOptionList, findSearchOptionKind);
 		
 		return this.add(categoriesUpdate);
 	}

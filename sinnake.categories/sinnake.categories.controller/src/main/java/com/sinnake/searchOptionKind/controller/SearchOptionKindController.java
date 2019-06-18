@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.categories.domain.service.command.searchOptionKind.SearchOptionKindService;
@@ -40,12 +41,12 @@ public class SearchOptionKindController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/kind/{id}")
-	public ResponseEntity<ResultEntity<Map<String, Object>>> update(@PathVariable Long id, HttpServletRequest req) {
+	public ResponseEntity<ResultEntity<Map<String, Object>>> update(@PathVariable Long id
+		, @RequestParam(value = "searchOptionName", required = true) String searchOptionName
+		, HttpServletRequest req) {
 		
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
-
-				String searchOptionName = req.getParameter("searchOptionName");
 				
 				return this.searchOptionKindService.searchOptionKindUpdate(id, searchOptionName);
 			})
@@ -53,12 +54,12 @@ public class SearchOptionKindController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/kind")
-	public ResponseEntity<ResultEntity<Long>> add(HttpServletRequest req) {
+	public ResponseEntity<ResultEntity<Long>> add(
+		 @RequestParam(value = "searchOptionName", required = true) String searchOptionName			
+		 , HttpServletRequest req) {
 		
 		return new PresentationProcess<Long>()
 			.process(() -> {
-
-				String searchOptionName = req.getParameter("searchOptionName");
 				
 				return this.searchOptionKindService.searchOptionKindAdd(searchOptionName);
 			})

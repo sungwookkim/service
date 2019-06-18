@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +15,8 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import com.sinnake.member.prop.resourcesConfig.MemberResourcesConfig;
 
 /**
  * resources 설정 클래스.
@@ -89,13 +90,9 @@ public class ResourcesConfig extends ResourceServerConfigurerAdapter {
 			.csrf()
 				.disable()
 			.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
-				.authorizeRequests()
-				.antMatchers(HttpMethod.PUT, "/api/member/sign").hasRole("USER")
-				.antMatchers("/api/member/authTest").hasRole("USER")
-				.anyRequest()
-				.permitAll();
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		new MemberResourcesConfig().configure(http);
 	}
 	
 	/**

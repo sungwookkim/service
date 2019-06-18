@@ -85,7 +85,7 @@
 			<artifactId>sinnake.categories.controller</artifactId>
 			<version>0.0.1</version>
 			<type>jar</type>
-		</dependency>		
+		</dependency>
 	</dependencies>
 	
 	<build>

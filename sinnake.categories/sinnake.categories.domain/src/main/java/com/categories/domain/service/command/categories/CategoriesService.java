@@ -1,8 +1,10 @@
 package com.categories.domain.service.command.categories;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,8 +12,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.categories.domain.entity.categories.Categories;
+import com.categories.domain.entity.searchOption.SearchOptionKind;
+import com.categories.domain.entity.searchOption.SearchOptionList;
 import com.categories.domain.repo.command.categories.CategoriesCommandRepository;
 import com.categories.domain.repo.read.categories.CategoriesReadRepository;
+import com.categories.domain.repo.read.categories.SearchOptionKindReadRepository;
+import com.google.gson.Gson;
 import com.sinnake.entity.ResultEntity;
 
 import commonInterface.CommonGet;
@@ -28,13 +34,16 @@ public class CategoriesService {
 
 	private CategoriesCommandRepository categoriesCommandRepository;
 	private CategoriesReadRepository categoriesReadRepository;
+	private SearchOptionKindReadRepository searchOptionKindReadRepository;
 	
 	@Autowired
 	public CategoriesService(CategoriesCommandRepository categoriesCommandRepository
-			, CategoriesReadRepository categoriesReadRepository) {
+			, CategoriesReadRepository categoriesReadRepository
+			, SearchOptionKindReadRepository searchOptionKindReadRepository) {
 
 		this.categoriesCommandRepository = categoriesCommandRepository;
 		this.categoriesReadRepository = categoriesReadRepository;
+		this.searchOptionKindReadRepository = searchOptionKindReadRepository;
 	}
 	
 	/**
@@ -45,13 +54,22 @@ public class CategoriesService {
 	 * @param parentId 상위 카테고리 Seq 값
 	 * @return 카테고리 결과 조회 값
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional(transactionManager = "categoriesTransactionManager",  propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public ResultEntity<Long> categoriesAdd(String categoryName, Long parentId) {
+	public ResultEntity<Long> categoriesAdd(String categoryName, Long parentId, String searchOptionList) {
 		
 		return new RestProcess<Long>()
 			.call(() -> {
-				ResultEntity<Categories> categories = new Categories(categoryName, parentId).add(this.categoriesReadRepository::findId);
+				List<Map<String, String>> searchOptionLists = Optional.ofNullable(searchOptionList)
+					.filter(s -> s.length() > 0)
+					.map(s -> new Gson().fromJson(s, ArrayList.class ))
+					.orElseGet(ArrayList::new);
 				
+				ResultEntity<Categories> categories = new Categories(categoryName, parentId)
+					.add(this.categoriesReadRepository::findId
+						, searchOptionLists
+						, this.searchOptionKindReadRepository::findId);
+
 				if(categories.sucess()) {
 					this.categoriesCommandRepository.add(categories.getResult());
 
@@ -79,14 +97,22 @@ public class CategoriesService {
 	 * @param categoryName 수정할 카테고리 이름 값
 	 * @return 수정된 Categories 객체를 Map으로 변환해서 반환
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional(transactionManager = "categoriesTransactionManager",  propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public ResultEntity<Map<String, Object>> categoriesUpdate(Long id, Long parentId, String categoryName) {
+	public ResultEntity<Map<String, Object>> categoriesUpdate(Long id, Long parentId, String categoryName, String searchOptionList) {
 		
 		return new RestProcess<Map<String, Object>>()
 			.call(() -> {
+				List<Map<String, String>> searchOptionLists = Optional.ofNullable(searchOptionList)
+					.filter(s -> s.length() > 0)
+					.map(s -> new Gson().fromJson(s, ArrayList.class ))
+					.orElseGet(ArrayList::new);
+				
 				ResultEntity<Categories> resultEntity = new Categories(categoryName, parentId).update(
 					i -> this.categoriesReadRepository.findId(i)
-					, () -> this.categoriesReadRepository.findId(id));
+					, () -> this.categoriesReadRepository.findId(id)
+					, searchOptionLists
+					, this.searchOptionKindReadRepository::findId);
 					
 				if(!resultEntity.sucess()) {
 					return new ResultEntity<>(resultEntity.getCode());
@@ -106,7 +132,23 @@ public class CategoriesService {
 							rtn.put("categoryName", c.getCategoryName());
 							rtn.put("parentId", c.getParentId());
 							rtn.put("regDate", c.getRegDate());
-							
+							rtn.put("searchOptionList", CommonGet.<SearchOptionList, Map<String, Object>>convert(categories.getSearchOptionList(), s -> {
+								SearchOptionKind kind = s.getSearchOptionKind();
+								HashMap<String, Object> sok = new HashMap<>();
+								sok.put("id", kind.getId());
+								sok.put("searchOptionName", kind.getSearchOptionName());
+								sok.put("regDate", kind.getRegDate());
+								
+								HashMap<String, Object> sol = new HashMap<>();
+								sol.put("id", s.getId());
+								sol.put("regDate", s.getRegDate());
+								sol.put("searchOptionName", s.getSearchOptionName());
+								sol.put("type", s.getType());
+								sol.put("searchOptionKind", sok);
+
+								return sol;
+							}));
+
 							return rtn;
 						}));
 			})

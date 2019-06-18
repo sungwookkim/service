@@ -101,6 +101,6 @@ public class SearchOptionKind {
 	 */
 	public ResultEntity<SearchOptionKind> add(SearchOptionKindAdd searchOptionKindAdd) {
 		return searchOptionKindAdd.process();
-	}
+	}	
 
 }
