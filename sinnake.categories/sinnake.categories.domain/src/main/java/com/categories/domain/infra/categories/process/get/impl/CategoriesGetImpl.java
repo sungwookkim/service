@@ -77,14 +77,17 @@ public class CategoriesGetImpl implements CategoriesGet {
 	 * @param c 카테고리 객체
 	 * @return 카테고리 객체 데이터를 Map 형태로 변환
 	 */
-	protected static HashMap<String, Object> convertProcess(Categories c) {
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, Object> convertProcess(Categories c) {
 		HashMap<String, Object> category = new HashMap<>();
 		
 		category.put("id", c.getId());
 		category.put("categoryName", c.getCategoryName());
 		category.put("parentId", c.getParentId());
 		category.put("regDate", c.getRegDate());
-		category.put("searchOptionList", CommonGet.<SearchOptionList, Map<String, Object>>convert(c.getSearchOptionList(), s -> {
+
+		HashMap<Long, Object> searchOption = new HashMap<>();
+		CommonGet.<SearchOptionList, Map<String, Object>>convert(c.getSearchOptionList(), s -> {
 			SearchOptionKind kind = s.getSearchOptionKind();
 			HashMap<String, Object> sok = new HashMap<>();
 			sok.put("id", kind.getId());
@@ -99,7 +102,28 @@ public class CategoriesGetImpl implements CategoriesGet {
 			sol.put("searchOptionKind", sok);
 
 			return sol;
-		}));
+		}).stream()
+			.collect(Collectors.groupingBy(s -> ((Map<String, Object>)s.get("searchOptionKind")).get("id")))
+			.entrySet()
+			.stream().forEach(v -> {
+				HashMap<String, Object> searchOptionTemp = new HashMap<>();
+				List<Map<String, Object>> searchOptionList = new ArrayList<>();
+
+				v.getValue().stream().forEach(t -> {					
+					searchOptionTemp.put("searchOptionKind", t.get("searchOptionKind"));
+					t.remove("searchOptionKind");
+					
+					searchOptionList.add(t);
+				});
+				
+				searchOptionTemp.put("searchOptionList", searchOptionList);
+
+				searchOption.put(Long.parseLong(v.getKey().toString()), searchOptionTemp);
+			});
+
+		category.put("searchOption", searchOption);
+
 		return category;
 	}
 }
+

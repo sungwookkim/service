@@ -1,7 +1,6 @@
 package com.categories.domain.service.command.categories;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,15 +11,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.categories.domain.entity.categories.Categories;
-import com.categories.domain.entity.searchOption.SearchOptionKind;
-import com.categories.domain.entity.searchOption.SearchOptionList;
+import com.categories.domain.infra.categories.process.get.impl.CategoriesGetImpl;
 import com.categories.domain.repo.command.categories.CategoriesCommandRepository;
 import com.categories.domain.repo.read.categories.CategoriesReadRepository;
 import com.categories.domain.repo.read.categories.SearchOptionKindReadRepository;
 import com.google.gson.Gson;
 import com.sinnake.entity.ResultEntity;
 
-import commonInterface.CommonGet;
 import util.RestProcess;
 
 /**
@@ -123,34 +120,7 @@ public class CategoriesService {
 				this.categoriesCommandRepository.add(categories);
 
 				return new ResultEntity<>(resultEntity.getCode()
-					, CommonGet.<Categories, Map<String, Object>>convert(categories
-						, c -> {
-							HashMap<String, Object> rtn = new HashMap<>();
-							
-							rtn.put("id", c.getId());
-							rtn.put("categoryName", c.getCategoryName());
-							rtn.put("categoryName", c.getCategoryName());
-							rtn.put("parentId", c.getParentId());
-							rtn.put("regDate", c.getRegDate());
-							rtn.put("searchOptionList", CommonGet.<SearchOptionList, Map<String, Object>>convert(categories.getSearchOptionList(), s -> {
-								SearchOptionKind kind = s.getSearchOptionKind();
-								HashMap<String, Object> sok = new HashMap<>();
-								sok.put("id", kind.getId());
-								sok.put("searchOptionName", kind.getSearchOptionName());
-								sok.put("regDate", kind.getRegDate());
-								
-								HashMap<String, Object> sol = new HashMap<>();
-								sol.put("id", s.getId());
-								sol.put("regDate", s.getRegDate());
-								sol.put("searchOptionName", s.getSearchOptionName());
-								sol.put("type", s.getType());
-								sol.put("searchOptionKind", sok);
-
-								return sol;
-							}));
-
-							return rtn;
-						}));
+					, CategoriesGetImpl.convertProcess(categories));
 			})
 			.fail(e -> {
 				e.printStackTrace();
