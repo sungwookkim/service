@@ -1,3 +1,16 @@
+iplist:
+  boot:
+    admin:
+      ip: 192.168.0.40
+      port: 9090
+  eureka:
+    defaultZone:
+      ip: 192.168.0.45
+      port: 8761
+  redis:
+    ip: 192.168.0.40
+    port: 6379
+
 server:
   port: 7000
   tomcat:
@@ -18,7 +31,7 @@ spring:
         instance:
           prefer-ip: true
         url:
-        - http://192.168.0.40:9090  
+        - http://${iplist.boot.admin.ip}:${iplist.boot.admin.port}  
   session:
     timeout:
       seconds: 1800
@@ -28,8 +41,8 @@ spring:
       namespace: spring:session
       cleanup-cron : 0 0 5 31 2 ?      
   redis:
-    host: 192.168.0.40
-    port: 6379
+    host: ${iplist.redis.ip}
+    port: ${iplist.redis.port}
     password: sinnake
 
 zuul:
@@ -54,6 +67,10 @@ zuul:
       path: /api/searchOption/**
       service-id: categories
       strip-prefix: false
+    temporary:
+      path: /api/product/**
+      service-id: product
+      strip-prefix: false      
              
 hystrix:
   threadpool:
@@ -82,7 +99,7 @@ eureka:
     healthcheck:
       enabled: true
     service-url:
-      defaultZone: http://192.168.0.45:8761/eureka/
+      defaultZone: http://${iplist.eureka.defaultZone.ip}:${iplist.eureka.defaultZone.port}/eureka/
 
 member:
   ribbon:
@@ -109,6 +126,18 @@ categories:
     MaxAutoRetries: 1
 
 searchOption:
+  ribbon:
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule
+    NFLoadBalancerPingInterval: 1
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
+    ServerListRefreshInterval : 3000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 300
+    MaxAutoRetries: 1
+    
+product: 
   ribbon:
     NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.AvailabilityFilteringRule

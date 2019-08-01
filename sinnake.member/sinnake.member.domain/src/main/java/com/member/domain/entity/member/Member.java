@@ -83,9 +83,9 @@ public class Member {
 		this.password = password;
 	}
 	
-	/*************************/
+	/***********************/
 	/* Getter, Setter 메소드 */
-	/*************************/
+	/***********************/
 	public Long getId() { return id; }
 	public String getUserName() { return userName; }
 	public String getPassword() { return password; }

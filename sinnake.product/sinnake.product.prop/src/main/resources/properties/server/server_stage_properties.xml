@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+    <comment>server_stage_properties</comment>
+    
+	<!-- 암호화 관련 설정 -->
+	<entry key="product.dbAes256.key">sinnakeAes256@$%DB</entry>
+	<entry key="product.pwAes256.key">sinnakeAes256@$%PW</entry>
+	
+</properties>

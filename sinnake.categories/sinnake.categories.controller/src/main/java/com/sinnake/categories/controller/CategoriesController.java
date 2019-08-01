@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.categories.domain.service.command.categories.CategoriesService;
+import com.categories.domain.service.command.categories.CategoriesCommandService;
+import com.categories.domain.service.read.categories.CategoriesReadService;
 import com.sinnake.entity.ResultEntity;
 
 import util.PresentationProcess;
@@ -22,11 +23,15 @@ import util.PresentationProcess;
 @RequestMapping(value = "/api/categories")
 public class CategoriesController {
 
-	private CategoriesService categoriesService;
+	private CategoriesCommandService categoriesCommandService;
+	private CategoriesReadService categoriesReadService; 
 	
 	@Autowired
-	public CategoriesController(CategoriesService categoriesService) {
-		this.categoriesService = categoriesService;
+	public CategoriesController(CategoriesCommandService categoriesCommandService
+		, CategoriesReadService categoriesReadService) {
+		
+		this.categoriesCommandService = categoriesCommandService;
+		this.categoriesReadService = categoriesReadService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/")
@@ -36,7 +41,7 @@ public class CategoriesController {
 			.process(() -> {
 				
 				return new ResultEntity<>(ResultEntity.sucessCodeString()
-					, this.categoriesService.findAllCategories());
+					, this.categoriesReadService.findAllCategories());
 			})
 			.exec();
 	}
@@ -50,7 +55,7 @@ public class CategoriesController {
 		return new PresentationProcess<Long>()
 			.process(() -> {				
 
-				return this.categoriesService.categoriesAdd(categoryName, parentId, searchOptionList);
+				return this.categoriesCommandService.categoriesAdd(categoryName, parentId, searchOptionList);
 			})
 			.exec();
 	}
@@ -65,7 +70,7 @@ public class CategoriesController {
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
 				
-				return this.categoriesService.categoriesUpdate(id, parentId, categoryName, searchOptionList);				
+				return this.categoriesCommandService.categoriesUpdate(id, parentId, categoryName, searchOptionList);				
 			})
 			.exec();
 	}
@@ -77,7 +82,7 @@ public class CategoriesController {
 			.process(() -> {
 				
 				return new ResultEntity<>(ResultEntity.sucessCodeString()
-					, this.categoriesService.findCategories(categoryId));
+					, this.categoriesReadService.findCategories(categoryId));
 			})
 			.exec();						
 	}
@@ -89,7 +94,7 @@ public class CategoriesController {
 			.process(() -> {
 
 				return new ResultEntity<>(ResultEntity.sucessCodeString()
-					, this.categoriesService.findChildCategories(parentId));
+					, this.categoriesReadService.findChildCategories(parentId));
 			})
 			.exec();
 	}

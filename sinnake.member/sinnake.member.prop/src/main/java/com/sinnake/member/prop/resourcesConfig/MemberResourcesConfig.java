@@ -12,7 +12,7 @@ public class MemberResourcesConfig implements ResourcesConfig {
 
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.PUT, "/api/member/sign").hasRole("USER")
-			.antMatchers("/api/member/authTest").hasRole("USER")
+			.antMatchers("/api/member/authtemporary").hasRole("USER")
 			.anyRequest()
 			.permitAll();
 	}

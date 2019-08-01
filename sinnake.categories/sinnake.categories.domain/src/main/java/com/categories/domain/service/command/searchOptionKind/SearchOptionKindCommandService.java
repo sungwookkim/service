@@ -24,33 +24,19 @@ import util.RestProcess;
  *
  */
 @Service
-public class SearchOptionKindService {
+public class SearchOptionKindCommandService {
 
 	private SearchOptionKindCommandRepository searchOptionKindCommandRepository;
 	private SearchOptionKindReadRepository searchOptionKindReadRepository;
 	
 	@Autowired
-	public SearchOptionKindService(SearchOptionKindCommandRepository searchOptionKindCommandRepository
+	public SearchOptionKindCommandService(SearchOptionKindCommandRepository searchOptionKindCommandRepository
 		, SearchOptionKindReadRepository searchOptionKindReadRepository) {
 		
 		this.searchOptionKindCommandRepository = searchOptionKindCommandRepository;
 		this.searchOptionKindReadRepository = searchOptionKindReadRepository;
 	}
-	
-	/**
-	 * 검색옵션 종류 조회 서비스
-	 * 
-	 * @author sinnakeWEB
-	 * @param id 검색옵션 종류 Seq 값
-	 * @return 검색옵션 종류 결과 값
-	 */
-	@Transactional(transactionManager = "categoriesTransactionManager")
-	public Map<String, Object> findSearchOptionKind(Long id) {
 		
-		return new SearchOptionKind()
-			.get().findSearchOptionKind(searchOptionKindReadRepository::findId, id);
-	}
-	
 	/**
 	 * 검색 옵션 종류 추가 서비스
 	 * 

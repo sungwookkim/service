@@ -42,7 +42,7 @@ public class CategoriesUpdateImpl extends CategoriesAddImpl implements Categorie
 	 * @return 검증 성공시 반환 값
 	 */
 	@Override
-	public ResultEntity<Categories> sucess(String code) {
+	protected ResultEntity<Categories> sucess(String code) {
 
 		ResultEntity<Categories> resultEntity;
 
@@ -86,9 +86,8 @@ public class CategoriesUpdateImpl extends CategoriesAddImpl implements Categorie
 	 * @author sinnakeWEB
 	 * @param categories 상위 카테고리 값을 수정하기 위한 카테고리 객체
 	 * @return 상위 카테고리가 수정된 Categories 객체
-	 */
-	@Override
-	public ResultEntity<Categories> updateParentId(Categories categories) {
+	 */	
+	protected ResultEntity<Categories> updateParentId(Categories categories) {
 		
 		return Optional.ofNullable(this.parentId)
 			.filter(p -> p >= 0L)
@@ -159,7 +158,7 @@ public class CategoriesUpdateImpl extends CategoriesAddImpl implements Categorie
 	}
 	
 	@Override
-	public ResultEntity<SearchOptionKind> searchOptionListValidate(Map<String, String> s) {
+	protected ResultEntity<SearchOptionKind> searchOptionListValidate(Map<String, String> s) {
 		if(!new SinnakeValidate(s.get("id")).required().getValidResult()) {
 			return new ResultEntity<>("-14");
 		}

@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.categories.domain.service.command.searchOptionKind.SearchOptionKindService;
+import com.categories.domain.service.command.searchOptionKind.SearchOptionKindCommandService;
+import com.categories.domain.service.read.searchOptionKind.SearchOptionKindReadService;
 import com.sinnake.entity.ResultEntity;
 
 import util.PresentationProcess;
@@ -21,11 +22,15 @@ import util.PresentationProcess;
 @RequestMapping(value = "/api/searchOption")
 public class SearchOptionKindController {
 
-	private SearchOptionKindService searchOptionKindService;
+	private SearchOptionKindCommandService searchOptionKindCommandService;
+	private SearchOptionKindReadService searchOptionKindReadService;
 	
 	@Autowired
-	public SearchOptionKindController(SearchOptionKindService searchOptionKindService) {
-		this.searchOptionKindService = searchOptionKindService;
+	public SearchOptionKindController(SearchOptionKindCommandService searchOptionKindCommandService
+		, SearchOptionKindReadService searchOptionKindReadService) {
+		
+		this.searchOptionKindCommandService = searchOptionKindCommandService;
+		this.searchOptionKindReadService = searchOptionKindReadService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/kind/{id}")
@@ -35,7 +40,7 @@ public class SearchOptionKindController {
 			.process(()-> {
 				
 				return new ResultEntity<>(ResultEntity.sucessCodeString()
-					, this.searchOptionKindService.findSearchOptionKind(id));
+					, this.searchOptionKindReadService.findSearchOptionKind(id));
 			})
 			.exec();
 	}
@@ -48,7 +53,7 @@ public class SearchOptionKindController {
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
 				
-				return this.searchOptionKindService.searchOptionKindUpdate(id, searchOptionName);
+				return this.searchOptionKindCommandService.searchOptionKindUpdate(id, searchOptionName);
 			})
 			.exec();
 	}
@@ -61,7 +66,7 @@ public class SearchOptionKindController {
 		return new PresentationProcess<Long>()
 			.process(() -> {
 				
-				return this.searchOptionKindService.searchOptionKindAdd(searchOptionName);
+				return this.searchOptionKindCommandService.searchOptionKindAdd(searchOptionName);
 			})
 			.exec();
 	}

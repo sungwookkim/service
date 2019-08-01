@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	    <groupId>sinnake.service.template</groupId>
+	    <artifactId>sinnake.service.template</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<groupId>sinnake.domain</groupId>
+	<artifactId>sinnake.domain</artifactId>
+	<version>0.0.1</version>
+	<name>sinnake.domain</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+		<!-- DB --> 	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency> 
+
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>sinnake.default.util</groupId>
+			<artifactId>sinnake.default.util</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>sinnake.default.prop</groupId>
+			<artifactId>sinnake.default.prop</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+				
+		<dependency>
+			<groupId>sinnake.default.entity</groupId>
+			<artifactId>sinnake.default.entity</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>

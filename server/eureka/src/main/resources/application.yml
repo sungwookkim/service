@@ -1,3 +1,13 @@
+iplist:
+  boot:
+    admin:
+      ip: 192.168.0.40
+      port: 9090
+  eureka:
+    defaultZone:
+      ip: 192.168.0.45
+      port: 8761
+      
 server:
   port: 8761
   tomcat:
@@ -18,14 +28,14 @@ spring:
         instance:
           prefer-ip: true      
         url:
-        - http://192.168.0.40:9090
+        - http://${iplist.boot.admin.ip}:${iplist.boot.admin.port}
 
 eureka:
   server:
     enable-self-preservation: false
     renewal-percent-threshold: 0.1
   instance:
-    hostname: 192.168.0.33
+    hostname: localhost
   client:
     register-with-eureka: false
     fetch-registry: false

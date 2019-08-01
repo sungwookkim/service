@@ -93,17 +93,5 @@ public class MemberController {
 			}).exec();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/authTest")
-	public ResponseEntity<String> authTest(HttpServletRequest req) {
-		
-		return ResponseEntity.status(HttpStatus.OK)
-			.body("{'ok' : 'authTest'}");
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/test")
-	public ResponseEntity<String> test(HttpServletRequest req) {
-		
-		return ResponseEntity.status(HttpStatus.OK)
-			.body("{'ok' : 'test'}");
-	}	
+
 }

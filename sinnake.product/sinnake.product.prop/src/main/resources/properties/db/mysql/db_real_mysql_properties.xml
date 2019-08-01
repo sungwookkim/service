@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+    <comment>db_real_mysql_properties</comment>
+    
+    <!-- DB 설정 내용 시작 -->
+    <entry key="product.db.mysql.username">MnNNNxK6gwZo9c9Jv8s33g==</entry>
+    <entry key="product.db.mysql.url">uolKJdOxnCYScLiPkKkA319ScjZqqn+Dij7aFfPPwzTh5zzHYHj1pIeku8JNBoIB</entry>
+    <entry key="product.db.mysql.password">ytHp9z9rxLogkLtiOcJx/A==</entry>
+	<!-- DB 설정 내용 끝 -->
+</properties>

@@ -12,8 +12,6 @@ import com.sinnake.entity.ResultEntity;
 import commonInterface.CommonProcess;
 
 public interface CategoriesAdd extends CommonProcess<Categories> {
-
-	public ResultEntity<Categories> add();
 	
 	public void pareintId(Long parentId, Function<Long, Categories> findParentCategories);
 	

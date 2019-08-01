@@ -55,8 +55,8 @@ public class SinnakeAES256Util {
         Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
         c.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes("UTF-8")));
  
-        byte[] byteStr = Base64.decodeBase64(str.getBytes());
+        byte[] bytemporaryr = Base64.decodeBase64(str.getBytes());
  
-        return new String(c.doFinal(byteStr),"UTF-8");
+        return new String(c.doFinal(bytemporaryr),"UTF-8");
     }
 }

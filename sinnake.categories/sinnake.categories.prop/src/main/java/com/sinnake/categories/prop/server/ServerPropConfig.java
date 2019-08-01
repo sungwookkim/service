@@ -17,10 +17,13 @@ import prop.server.ServerPropConfigAbs;
 @Component("categoriesServerPropConfig")
 public class ServerPropConfig extends ServerPropConfigAbs {
 
+	//@Value("${spring.profiles.active}") String profile;
+	
 	public ServerPropConfig(@Value("#{categoriesGlobalProp['categories.serverPropFile.propertie']}") String propFile
 		, @Value("#{categoriesGlobalProp['categories.type.propertie']}") String serverType) {
 		
 		super(propFile, serverType);
+		//System.out.println("profile ::::::::::::::::::::: " + profile);
 	}
 
 	/**

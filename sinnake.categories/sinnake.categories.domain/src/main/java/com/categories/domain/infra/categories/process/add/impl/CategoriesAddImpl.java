@@ -40,9 +40,8 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * 
 	 * @author sinnakeWEB
 	 * @return 생성할 카테고리 객체 반환
-	 */
-	@Override
-	public ResultEntity<Categories> add() {
+	 */	
+	protected ResultEntity<Categories> add() {
 
 		ResultEntity<Categories> result = this.validate();
 		
@@ -105,7 +104,7 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * @author sinnakeWEB
 	 * @return 검증값
 	 */
-	public boolean parentIdCategoryValidate() {
+	protected boolean parentIdCategoryValidate() {
 
 		return 0L == this.parentId.longValue();
 	}
@@ -116,7 +115,7 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * @author sinnakeWEB
 	 * @return 검증값
 	 */
-	public boolean parentCategoryValidate() {
+	protected boolean parentCategoryValidate() {
 
 		return Optional.ofNullable(this.findParentCategories)
 			.map(c -> c.apply(this.parentId))
@@ -130,7 +129,7 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * @author sinnakeWEB
 	 * @return 검증값
 	 */
-	public boolean categoryNameValidate() {
+	protected boolean categoryNameValidate() {
 
 		return new SinnakeValidate(this.categoryName)
 			.required()
@@ -144,7 +143,7 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * @param s 상품옵션 리스트 값
 	 * @return 검증 값
 	 */
-	public ResultEntity<SearchOptionKind> searchOptionListValidate(Map<String, String> s) {
+	protected ResultEntity<SearchOptionKind> searchOptionListValidate(Map<String, String> s) {
 
 		Long kindId;
 						
@@ -178,7 +177,7 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * @param type 검색옵션리스트 타입
 	 * @param searchOptionKind 검색옵 종류 객체 
 	 */
-	public void setSearchOptionList(Categories categories, String searchOptionName, String type, SearchOptionKind searchOptionKind) {
+	protected void setSearchOptionList(Categories categories, String searchOptionName, String type, SearchOptionKind searchOptionKind) {
 
 		SearchOptionList searchOptionList = new SearchOptionList(searchOptionName
 			, type
@@ -224,7 +223,7 @@ public class CategoriesAddImpl implements CategoriesAdd {
 	 * @param code 검증 여부 결과 값
 	 * @return 검증 성공시 반환 값
 	 */
-	public ResultEntity<Categories> sucess(String code) {
+	protected ResultEntity<Categories> sucess(String code) {
 
 		Categories categories = new Categories(this.categoryName, this.parentId);
 		

@@ -27,14 +27,14 @@ import util.RestProcess;
  *
  */
 @Service
-public class CategoriesService {
+public class CategoriesCommandService {
 
 	private CategoriesCommandRepository categoriesCommandRepository;
 	private CategoriesReadRepository categoriesReadRepository;
 	private SearchOptionKindReadRepository searchOptionKindReadRepository;
 	
 	@Autowired
-	public CategoriesService(CategoriesCommandRepository categoriesCommandRepository
+	public CategoriesCommandService(CategoriesCommandRepository categoriesCommandRepository
 			, CategoriesReadRepository categoriesReadRepository
 			, SearchOptionKindReadRepository searchOptionKindReadRepository) {
 
@@ -97,7 +97,7 @@ public class CategoriesService {
 	@SuppressWarnings("unchecked")
 	@Transactional(transactionManager = "categoriesTransactionManager",  propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public ResultEntity<Map<String, Object>> categoriesUpdate(Long id, Long parentId, String categoryName, String searchOptionList) {
-		
+
 		return new RestProcess<Map<String, Object>>()
 			.call(() -> {
 				List<Map<String, String>> searchOptionLists = Optional.ofNullable(searchOptionList)
@@ -131,43 +131,4 @@ public class CategoriesService {
 
 	}
 	
-	/**
-	 * 카테고리 조회 서비스
-	 * 
-	 * @author sinnakeWEB
-	 * @param id 카테고리 Seq 값
-	 * @return 카테고리 조회 결과 값
-	 */
-	@Transactional(transactionManager = "categoriesTransactionManager")
-	public Map<String, Object> findCategories(Long id) {
-
-		return new Categories()
-				.get().findCategories(this.categoriesReadRepository::findId, id);
-	}
-	
-	/**
-	 * 하위 카테고리 조회 서비스
-	 * 
-	 * @author sinnakeWEB
-	 * @param parentId 조회할 하위 카테고리의에 포함되어 있는 상위 카테고리 Seq 값
-	 * @return 카테고리 조회 결과 값
-	 */
-	@Transactional(transactionManager = "categoriesTransactionManager")
-	public List<Map<String, Object>> findChildCategories(Long parentId) {
-	
-		return new Categories()
-				.get().findChildCategories(this.categoriesReadRepository::findParentCategories, parentId);
-	}
-
-	/**
-	 * 전체 카테고리 조회 서비스
-	 * 
-	 * @author sinnakeWEB
-	 * @return 카테고리 조회 결과 값
-	 */
-	@Transactional(transactionManager = "categoriesTransactionManager")
-	public Map<Long, List<Map<String, Object>>> findAllCategories() {
-		return new Categories()
-				.get().findAllCategories(this.categoriesReadRepository::findAllCategories);
-	}
 }
