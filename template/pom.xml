@@ -5,9 +5,8 @@
   <artifactId>template</artifactId>
   <version>0.0.1</version>
   <packaging>pom</packaging>
-  <modules>
-  	<module>service</module>
-  	<module>sinnake.service.template</module>
-    <module>sinnake.web.template</module>
+  <modules>  	  
+    <module>web.template</module>
+    <module>api.template</module>
   </modules>
 </project>

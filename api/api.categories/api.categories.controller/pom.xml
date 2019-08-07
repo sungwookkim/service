@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>api.categories</groupId>
+		<artifactId>api.categories</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>api.categories.controller</groupId>
+	<artifactId>api.categories.controller</artifactId>
+	<version>0.0.1</version>
+	<name>api.categories.controller</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+    
+   		<dependency>
+			<groupId>api.categories.domain</groupId>
+			<artifactId>api.categories.domain</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>

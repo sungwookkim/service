@@ -79,22 +79,22 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>sinnake.default.util</groupId>
-			<artifactId>sinnake.default.util</artifactId>
+			<groupId>default.util</groupId>
+			<artifactId>default.util</artifactId>
 			<version>0.0.1</version>
 			<type>jar</type>
 		</dependency>		
 		
 		<dependency>
-			<groupId>sinnake.default.entity</groupId>
-			<artifactId>sinnake.default.entity</artifactId>
+			<groupId>default.entity</groupId>
+			<artifactId>default.entity</artifactId>
 			<version>0.0.1</version>
 			<type>jar</type>
 		</dependency>
 
  		<dependency>
-			<groupId>sinnake.default.prop</groupId>
-			<artifactId>sinnake.default.prop</artifactId>
+			<groupId>default.prop</groupId>
+			<artifactId>default.prop</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 
