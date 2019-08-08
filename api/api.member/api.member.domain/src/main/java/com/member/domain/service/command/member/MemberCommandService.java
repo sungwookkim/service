@@ -29,7 +29,7 @@ import util.RestProcess;
  * @author sinnakeWEB
  */
 @Service
-public class MemberService {
+public class MemberCommandService {
 
 	private MemberCommandRepository memberCommandRepository;
 	private MemberReadRepository memberReadRepository;
@@ -39,7 +39,7 @@ public class MemberService {
 	private ServerList oauthServerInfo;
 	
 	@Autowired
-	public MemberService(MemberCommandRepository memberCommandRepository
+	public MemberCommandService(MemberCommandRepository memberCommandRepository
 		, MemberReadRepository memberReadRepository
 		, RestTemplate restTemplate
 		, @Value("#{memberServerProp['member.pwAes256.key']}") String pwKey
@@ -131,7 +131,7 @@ public class MemberService {
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> val = Optional.ofNullable(new Gson().fromJson(rtn, HashMap.class)).orElse(new HashMap<>());					
 					
-					if(!"1".equals(Optional.of(val.get("code")).get())) {
+					if(!ResultEntity.sucess(Optional.of(val.get("code")).get())) {
 						throw new RuntimeException();
 					}
 

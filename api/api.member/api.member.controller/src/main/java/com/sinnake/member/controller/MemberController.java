@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.member.domain.entity.member.Member;
-import com.member.domain.service.command.member.MemberService;
+import com.member.domain.service.command.member.MemberCommandService;
+import com.member.domain.service.read.member.MemberReadService;
 import com.sinnake.entity.ResultEntity;
 
 import util.PresentationProcess;
@@ -24,11 +25,15 @@ import util.PresentationProcess;
 @RequestMapping(value="/api/member")
 public class MemberController {
 
-	private MemberService memberService;
+	private MemberCommandService memberCommandService;
+	private MemberReadService memberReadService;
 
 	@Autowired
-	public MemberController(MemberService memberService) {
-		this.memberService = memberService;
+	public MemberController(MemberCommandService memberCommandService
+		, MemberReadService memberReadService) {
+		
+		this.memberCommandService = memberCommandService;
+		this.memberReadService = memberReadService;
 	}
 
 	@RequestMapping(method = RequestMethod.PUT
@@ -50,7 +55,7 @@ public class MemberController {
 				ResultEntity<Member> resultEntity = null; 
 				
 				try {
-					resultEntity = this.memberService.signUpdate(userName
+					resultEntity = this.memberCommandService.signUpdate(userName
 						, password
 						, rePassword
 						, address
@@ -79,7 +84,7 @@ public class MemberController {
 				ResultEntity<Member> resultEntity = null; 
 				
 				try {
-					resultEntity = this.memberService.signUp(userName
+					resultEntity = this.memberCommandService.signUp(userName
 						, password
 						, rePassword
 						, address
@@ -93,5 +98,19 @@ public class MemberController {
 			}).exec();
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/login")	
+	public ResponseEntity<ResultEntity<Map<String, Object>>> memberGet(HttpServletRequest req) {
+		
+		return new PresentationProcess<Map<String, Object>>()
+			.process(() -> {
 
+				Map<String, Object> member = this.memberReadService
+					.findMember(req.getParameter("username").toString());
+
+				return new ResultEntity<>(ResultEntity.sucessCodeString(), member);
+			})
+			.exec();
+	}
+	
 }

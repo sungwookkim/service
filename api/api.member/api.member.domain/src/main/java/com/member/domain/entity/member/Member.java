@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.member.domain.infra.member.process.get.impl.MemberGetImpl;
 import com.member.domain.infra.member.process.signUpdate.impl.SignUpdateImpl;
 import com.member.domain.infra.member.process.signup.SignUp;
 import com.member.domain.infra.member.process.signup.impl.SignUpImpl;
@@ -145,6 +146,16 @@ public class Member {
 	/********/
 	/* 프로세스*/
 	/********/
+	
+	/**
+	 * 회원 조회 프로세스
+	 * 
+	 * @author sinnakeWEB
+	 * @return 조회 객체 반환
+	 */
+	public MemberGetImpl get() {
+		return new MemberGetImpl();
+	}
 	/**
 	 * 회원가입 프로세스
 	 * 
