@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.web.client.RestTemplate;
 
 import com.netflix.zuul.context.RequestContext;
-import com.zuul.filter.pre.token.enumPackage.TokenKey;
+import com.zuul.filter.enums.TokenKey;
 import com.zuul.filter.pre.token.produce.impl.TokenProduceCookieSession;
 
 public class TokenRefreshCookieSession extends TokenRefreshDefault {

@@ -13,6 +13,7 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import com.sinnake.entity.ResultEntity;
 import com.zuul.config.prop.TokenControlConfig;
+import com.zuul.filter.biz.init.UserInit;
 import com.zuul.filter.pre.token.produce.impl.TokenProduceCookieSession;
 import com.zuul.filter.pre.token.produce.impl.TokenProduceDefault;
 import com.zuul.filter.pre.token.produce.impl.TokenProduceSession;
@@ -43,11 +44,12 @@ public class TokenProduceFilter extends ZuulFilter {
 	}
 
 	@Override
-	public boolean shouldFilter() {
+	public boolean shouldFilter() {		
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		HttpServletRequest httpServletRequest = requestContext.getRequest();
 		
-		return "POST".equals(httpServletRequest.getMethod()) && LOGIN_URL.equals(httpServletRequest.getRequestURI());
+		return "POST".equals(httpServletRequest.getMethod()) 
+			&& LOGIN_URL.equals(httpServletRequest.getRequestURI());
 	}
 
 	@Override
@@ -71,6 +73,9 @@ public class TokenProduceFilter extends ZuulFilter {
 			};
 		};
 		
+		new UserInit(requestContext.getRequest()
+			, requestContext.getResponse()).init();
+
 		switch (this.tokenControlConfig.getTokenControl()) {
 			case "cookie":
 				result = new TokenProduceDefault(url, userName, this.restTemplate, requestContext).produce(tokenPostParam);

@@ -1,4 +1,4 @@
-package com.zuul.filter.pre.token.enumPackage;
+package com.zuul.filter.enums;
 
 public enum TokenKey {
 

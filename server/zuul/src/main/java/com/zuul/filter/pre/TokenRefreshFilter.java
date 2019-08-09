@@ -31,7 +31,7 @@ public class TokenRefreshFilter extends ZuulFilter {
 	private ServerList oauthServerInfo;
 	private TokenControlConfig tokenControlConfig;
 	
-	private static final String GRANT_TYPE = "refresh_token";	
+	private static final String GRANT_TYPE = "refresh_token";
 	
 	@Autowired
 	public TokenRefreshFilter(RestTemplate restTemplate

@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.netflix.zuul.context.RequestContext;
 import com.sinnake.entity.ResultEntity;
-import com.zuul.filter.pre.token.enumPackage.TokenKey;
+import com.zuul.filter.enums.TokenKey;
 import com.zuul.filter.pre.token.produce.impl.TokenProduceDefault;
 import com.zuul.filter.pre.token.refresh.abs.TokenRefresh;
 

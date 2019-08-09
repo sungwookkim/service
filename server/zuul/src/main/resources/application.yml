@@ -167,4 +167,4 @@ httppool:
   socketTimeout: 5000
  
 tokencontrol:
-  token-control: "cookie"
+  token-control: "session"

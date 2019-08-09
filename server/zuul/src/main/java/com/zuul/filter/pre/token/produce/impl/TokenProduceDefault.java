@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.netflix.zuul.context.RequestContext;
 import com.sinnake.entity.ResultEntity;
 import com.util.CookieUtil;
-import com.zuul.filter.pre.token.enumPackage.TokenKey;
+import com.zuul.filter.enums.TokenKey;
 import com.zuul.filter.pre.token.produce.abs.TokenProduce;
 
 public class TokenProduceDefault extends TokenProduce<String> {

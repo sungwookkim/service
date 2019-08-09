@@ -1,6 +1,8 @@
 package com.sinnake.member.controller;
 
 import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,8 +101,8 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/login")	
-	public ResponseEntity<ResultEntity<Map<String, Object>>> memberGet(HttpServletRequest req) {
+	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	public ResponseEntity<ResultEntity<Map<String, Object>>> login(HttpServletRequest req) {
 		
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
@@ -109,6 +111,20 @@ public class MemberController {
 					.findMember(req.getParameter("username").toString());
 
 				return new ResultEntity<>(ResultEntity.sucessCodeString(), member);
+			})
+			.exec();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/logout")
+	public ResponseEntity<ResultEntity<Map<String, Object>>> logout(Principal principal) {
+		
+		return new PresentationProcess<Map<String, Object>>()
+			.process(() -> {
+				HashMap<String, Object> value = new HashMap<>();				
+				value.put("userName", principal.getName());
+				value.put("logoutDate", new Date());
+
+				return new ResultEntity<>(ResultEntity.sucessCodeString(), value);
 			})
 			.exec();
 	}

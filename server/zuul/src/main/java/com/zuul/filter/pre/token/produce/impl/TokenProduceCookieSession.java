@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.netflix.zuul.context.RequestContext;
 import com.util.CookieUtil;
-import com.zuul.filter.pre.token.enumPackage.TokenKey;
+import com.zuul.filter.enums.TokenKey;
 
 public class TokenProduceCookieSession extends TokenProduceDefault {
 
