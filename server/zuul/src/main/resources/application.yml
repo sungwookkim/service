@@ -1,17 +1,18 @@
 iplist:
   boot:
     admin:
-      ip: 192.168.0.40
+      ip: admin.sinnake.kro.kr
       port: 9090
   eureka:
     defaultZone:
-      ip: 192.168.0.45
+      ip: eureka.sinnake.kro.kr
       port: 8761
   redis:
-    ip: 192.168.0.40
+    ip: redis.sinnake.kro.kr
     port: 6379
 
 server:
+  address: s1nnak2.iptime.org
   port: 7000
   tomcat:
     max-connections: 15000
@@ -28,8 +29,6 @@ spring:
   boot:
     admin:
       client:
-        instance:
-          prefer-ip: true
         url:
         - http://${iplist.boot.admin.ip}:${iplist.boot.admin.port}  
   session:
@@ -89,7 +88,7 @@ hystrix:
               timeoutInMilliseconds: 100000
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${server.address}
     status-page-url: http://${eureka.instance.hostname}:${server.port}/info
     health-check-url-path: http://${eureka.instance.hostname}:${server.port}/health
     preferIpAddress: true

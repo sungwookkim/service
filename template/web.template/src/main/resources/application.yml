@@ -1,7 +1,7 @@
 iplist:
   boot:
     admin:
-      ip: 192.168.0.40
+      ip: admin.sinnake.site
       port: 9090
   eureka:
     defaultZone:
@@ -9,6 +9,7 @@ iplist:
       port: 8761
 
 server:
+  address: s1nnak2.iptime.org
   port: 8081
   tomcat:
     max-connections: 15000
@@ -25,8 +26,6 @@ spring:
   boot:
     admin:
       client:
-        instance:
-          prefer-ip: true
         url:
         - http://${iplist.boot.admin.ip}:${iplist.boot.admin.port}
     

@@ -8,7 +8,13 @@
     <entry key="auth.db.sqlSessionFactoryBean.mapperLocations">classpath:mapper/com/auth/domain/service/**/*.xml</entry>
 
     <entry key="auth.db.mysql.username">MnNNNxK6gwZo9c9Jv8s33g==</entry>
-    <entry key="auth.db.mysql.url">uolKJdOxnCYScLiPkKkA319ScjZqqn+Dij7aFfPPwzTh5zzHYHj1pIeku8JNBoIB</entry>
+
+    <!-- local -->
+    <!-- <entry key="auth.db.mysql.url">uolKJdOxnCYScLiPkKkA319ScjZqqn+Dij7aFfPPwzTh5zzHYHj1pIeku8JNBoIB</entry> -->
+    
+    <!-- GCP -->
+    <entry key="auth.db.mysql.url">BJiWt2yRqbm4Dp+2JFjHkJtT0pMAFoUDKQYwc9hwK+UOwZIoQQlgRSRxhSe6lxm3</entry>
+    
     <entry key="auth.db.mysql.password">ytHp9z9rxLogkLtiOcJx/A==</entry>
     <!-- DB 설정 내용 끝 -->
 </properties>

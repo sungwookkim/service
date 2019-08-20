@@ -1,18 +1,19 @@
 iplist:
   boot:
     admin:
-      ip: 192.168.0.40
+      ip: admin.sinnake.kro.kr
       port: 9090
   eureka:
     defaultZone:
-      ip: 192.168.0.45
+      ip: eureka.sinnake.kro.kr
       port: 8761
 
 server:
+  address: s1nnak2.iptime.org
   port: 8082
   tomcat:
     max-connections: 15000
-  
+
 spring:
   profiles:
     active:
@@ -28,80 +29,12 @@ spring:
   boot:
     admin:
       client:
-        instance:
-          prefer-ip: true
         url:
         - http://${iplist.boot.admin.ip}:${iplist.boot.admin.port}
     
 eureka:
   instance:
-    hostname: localhost
-    status-page-url: http://${eureka.instance.hostname}:${server.port}/info
-    health-check-url-path: http://${eureka.instance.hostname}:${server.port}/health
-  client: 
-    healthcheck:
-      enabled: true
-    service-url:
-      defaultZone: http://${iplist.eureka.defaultZone.ip}:${iplist.eureka.defaultZone.port}/eureka/
-
-management:
-  health:
-    db:
-      enabled: false
-  endpoints:
-    web:
-      exposure:
-        include:
-        - "*"
-
-logging:
-  file: ./logs/categories/categoriesLogFile.txt
-  
-httppool:
-  maxPerRoute: 100
-  maxTotal: 1000
-  connectionRequestTimeout: 5000
-  connectTimeout: 5000
-  socketTimeout: 5000
----
-iplist:
-  boot:
-    admin:
-      ip: 192.168.0.40
-      port: 9090
-  eureka:
-    defaultZone:
-      ip: 192.168.0.45
-      port: 8761
-
-server:
-  port: 8082
-  tomcat:
-    max-connections: 15000
-  
-spring:
-  profiles:
-    active:
-    - dev
-  jackson:
-    serialization:            
-      write-dates-as-timestamps: true
-      write-date-timestamps-as-nanoseconds: false
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: categories
-  boot:
-    admin:
-      client:
-        instance:
-          prefer-ip: true
-        url:
-        - http://${iplist.boot.admin.ip}:${iplist.boot.admin.port}
-    
-eureka:
-  instance:
-    hostname: localhost
+    hostname: ${server.address}
     status-page-url: http://${eureka.instance.hostname}:${server.port}/info
     health-check-url-path: http://${eureka.instance.hostname}:${server.port}/health
   client: 
