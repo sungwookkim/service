@@ -129,4 +129,18 @@ public class MemberController {
 			.exec();
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/info")
+	public ResponseEntity<ResultEntity<Map<String, Object>>> info(Principal principal) {
+		
+		return new PresentationProcess<Map<String, Object>>()
+			.process(() -> {
+
+				Map<String, Object> member = this.memberReadService
+					.findMember(principal.getName());
+
+				return new ResultEntity<>(ResultEntity.sucessCodeString(), member);
+			})
+			.exec();
+	}
 }

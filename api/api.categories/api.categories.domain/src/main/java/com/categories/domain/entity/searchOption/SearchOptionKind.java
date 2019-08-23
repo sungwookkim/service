@@ -21,7 +21,7 @@ import com.sinnake.entity.ResultEntity;
  * @author sinnakeWEB
  *
  */
-@Entity(name = "searchOptionKind")
+@Entity(name = "search_option_Kind")
 public class SearchOptionKind {
 
 	@Id

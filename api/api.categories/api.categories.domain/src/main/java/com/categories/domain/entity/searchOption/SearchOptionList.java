@@ -19,7 +19,7 @@ import com.categories.domain.entity.categories.Categories;
  * @author sinnakeWEB
  *
  */
-@Entity(name = "searchOptionList")
+@Entity(name = "search_option_list")
 public class SearchOptionList {
 
 	@Id

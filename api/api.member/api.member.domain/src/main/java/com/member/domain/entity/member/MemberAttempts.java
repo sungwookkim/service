@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
  * 
  * @author sinnakeWEB
  */
-@Entity(name = "memberattempts")
+@Entity(name = "member_attempts")
 public class MemberAttempts {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "member_id", unique = true)

@@ -107,7 +107,6 @@ public abstract class TokenRefresh<T> {
 						break;
 				}
 
-									
 			} else if(statusCode == 0) {
 				this.requestContext.addZuulRequestHeader("authorization", "bearer " + accessToken);
 			}

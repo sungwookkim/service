@@ -16,18 +16,18 @@
 			, M.USERNAME AS USERNAME
 		FROM 
 			MEMBER M
-			LEFT JOIN MEMBERATTEMPTS MA ON M.MEMBER_ID = MA.MEMBER_ID
+			LEFT JOIN MEMBER_ATTEMPTS MA ON M.MEMBER_ID = MA.MEMBER_ID
 		WHERE 
 			M.USERNAME = #{userName}
 	</select>
 	
 	<insert id="addUserAttempts" parameterType="java.util.Map">
-		INSERT INTO MEMBERATTEMPTS (MEMBER_ID, ATTEMPTS, LASTMODIFIED) 
+		INSERT INTO MEMBER_ATTEMPTS (MEMBER_ID, ATTEMPTS, LASTMODIFIED) 
 		VALUES(#{memberId}, #{attempts}, NOW())
 	</insert>
 
 	<update id="setUserAttempts" parameterType="java.lang.Long">
-		UPDATE MEMBERATTEMPTS SET 
+		UPDATE MEMBER_ATTEMPTS SET 
 			ATTEMPTS = ATTEMPTS + 1
 			, LASTMODIFIED = NOW() 
 		WHERE 
@@ -35,7 +35,7 @@
 	</update>
 	
 	<update id="setUserAttemptsRest" parameterType="java.lang.Long">
-		UPDATE MEMBERATTEMPTS SET 
+		UPDATE MEMBER_ATTEMPTS SET 
 			ATTEMPTS = 0
 			, LASTMODIFIED = NOW() 
 		WHERE 
