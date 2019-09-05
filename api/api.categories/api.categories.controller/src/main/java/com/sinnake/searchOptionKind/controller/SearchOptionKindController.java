@@ -19,7 +19,7 @@ import com.sinnake.entity.ResultEntity;
 import util.PresentationProcess;
 
 @RestController
-@RequestMapping(value = "/api/searchOption")
+@RequestMapping(value = "/api/v1/searchOption")
 public class SearchOptionKindController {
 
 	private SearchOptionKindCommandService searchOptionKindCommandService;

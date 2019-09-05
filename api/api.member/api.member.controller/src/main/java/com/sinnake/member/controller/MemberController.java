@@ -24,7 +24,7 @@ import com.sinnake.entity.ResultEntity;
 import util.PresentationProcess;
 
 @RestController
-@RequestMapping(value="/api/member")
+@RequestMapping(value="/api/v1/member")
 public class MemberController {
 
 	private MemberCommandService memberCommandService;

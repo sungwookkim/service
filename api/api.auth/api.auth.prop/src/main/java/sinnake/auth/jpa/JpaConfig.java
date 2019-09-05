@@ -75,7 +75,7 @@ public class JpaConfig {
 		/*jpaProperties.setProperty("hibernate.enhancer.enableDirtyTracking", "true");*/
 		/*jpaProperties.setProperty("hibernate.enhancer.enableLazyInitialization", "true");*/
 		/*jpaProperties.setProperty("hibernate.enhancer.enableAssociationManagement", "true");*/
-		jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+		jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update");
 		
 	    jpaProperties.setProperty("org.hibernate.SQL", "DEBUG");
 	    jpaProperties.setProperty("org.hibernate.tool.hbm2ddl", "DEBUG");

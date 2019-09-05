@@ -55,19 +55,19 @@ zuul:
   sensitive-headers:  
   routes: 
     member:      
-      path: /api/member/**
+      path: /api/v1/member/**
       service-id: member
       strip-prefix: false
     categories:
-      path: /api/categories/**
+      path: /api/v1/categories/**
       service-id: categories
       strip-prefix: false
     searchOption:
-      path: /api/searchOption/**
+      path: /api/v1/searchOption/**
       service-id: categories
       strip-prefix: false
     temporary:
-      path: /api/product/**
+      path: /api/v1/product/**
       service-id: product
       strip-prefix: false      
              
@@ -166,4 +166,4 @@ httppool:
   socketTimeout: 5000
  
 tokencontrol:
-  token-control: "cookie"
+  token-control: "session"

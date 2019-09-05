@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -36,6 +36,7 @@ import com.netflix.loadbalancer.Server;
 import com.netflix.loadbalancer.ServerList;
 import com.netflix.loadbalancer.ServerListFilter;
 import com.netflix.loadbalancer.ZoneAwareLoadBalancer;
+import com.token.tokenServices.SinnakeDefaultTokenServices;
 import com.zuul.config.Config;
 import com.zuul.filter.Filter;
 
@@ -107,6 +108,9 @@ class RedisConfig {
 	} 
 }
 
+@SuppressWarnings("deprecation")
+@EnableResourceServer
+@EnableWebMvcSecurity
 class SecurityConfig extends ResourceServerConfigurerAdapter {
 	
 	private String publicKey;
@@ -133,11 +137,11 @@ class SecurityConfig extends ResourceServerConfigurerAdapter {
 	
 	@Bean
 	@Primary
-	public DefaultTokenServices tokenService() {
-		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-		defaultTokenServices.setTokenStore(tokenStore());
-		
-		return defaultTokenServices;
+	public SinnakeDefaultTokenServices tokenService() {
+		SinnakeDefaultTokenServices sinnakeDefaultTokenServices = new SinnakeDefaultTokenServices();
+		sinnakeDefaultTokenServices.setTokenStore(tokenStore());
+
+		return sinnakeDefaultTokenServices;
 	}
 	
 	@Override

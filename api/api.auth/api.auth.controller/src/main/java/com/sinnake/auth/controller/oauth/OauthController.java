@@ -22,7 +22,7 @@ import util.PresentationProcess;
  * @author sinnakeWEB
  */
 @RestController
-@RequestMapping(value = "/api/oauth")
+@RequestMapping(value = "/api/v1/oauth")
 public class OauthController {
 
 	private OauthService oauthService;

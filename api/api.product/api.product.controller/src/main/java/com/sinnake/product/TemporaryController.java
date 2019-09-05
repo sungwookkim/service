@@ -18,7 +18,7 @@ import com.sinnake.entity.ResultEntity;
 import util.PresentationProcess;
 
 @RestController
-@RequestMapping(value = "/api/product")
+@RequestMapping(value = "/api/v1/product")
 public class TemporaryController {
 	
 	private TemporaryCommandService temporaryCommandService;

@@ -11,9 +11,9 @@ public class MemberResourcesConfig implements ResourcesConfig {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.PUT, "/api/member/sign").hasRole("USER")
-			.antMatchers(HttpMethod.GET, "/api/member/logout").hasRole("USER")
-			.antMatchers(HttpMethod.GET, "/api/member/info").hasRole("USER")
+			.antMatchers(HttpMethod.PUT, "/api/v1/member/sign").hasRole("USER")
+			.antMatchers(HttpMethod.GET, "/api/v1/member/logout").hasRole("USER")
+			.antMatchers(HttpMethod.GET, "/api/v1/member/info").hasRole("USER")
 			.anyRequest()
 			.permitAll();
 	}

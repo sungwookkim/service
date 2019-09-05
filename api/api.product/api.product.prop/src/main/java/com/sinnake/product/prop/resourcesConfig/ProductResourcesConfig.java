@@ -10,7 +10,7 @@ public class ProductResourcesConfig implements ResourcesConfig {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()			
-			/*.antMatchers("/api/member/authproduct").hasRole("USER")*/
+			/*.antMatchers("/api/v1/member/authproduct").hasRole("USER")*/
 			.anyRequest()
 			.permitAll();
 	}

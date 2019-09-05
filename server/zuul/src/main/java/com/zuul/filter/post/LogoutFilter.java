@@ -11,7 +11,7 @@ import com.zuul.filter.biz.init.UserInit;
 
 public class LogoutFilter extends ZuulFilter {
 
-	private static final String LOGOUT_URL = "/api/member/logout";
+	private static final String LOGOUT_URL = "/api/v1/member/logout";
 
 	@Autowired
 	public void Logoutfilter() {

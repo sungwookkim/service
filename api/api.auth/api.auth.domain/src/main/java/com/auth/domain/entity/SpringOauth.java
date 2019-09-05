@@ -78,8 +78,8 @@ public class SpringOauth {
 		this.scope = "read,write";
 		this.authorized_grant_types = "authorization_code,password,implicit,refresh_token";
 		this.authorities = authorities;
-		this.access_token_validity = 2592000;
-		this.refresh_token_validity = 2592000;
+		this.access_token_validity = 600;
+		this.refresh_token_validity = 1800;
 	}
 	
 	public SpringOauth(String client_id

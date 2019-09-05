@@ -10,7 +10,7 @@ public class PropResourcesConfig implements ResourcesConfig {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()			
-			/*.antMatchers("/api/member/authtemporary").hasRole("USER")*/
+			/*.antMatchers("/api/v1/member/authtemporary").hasRole("USER")*/
 			.anyRequest()
 			.permitAll();
 	}

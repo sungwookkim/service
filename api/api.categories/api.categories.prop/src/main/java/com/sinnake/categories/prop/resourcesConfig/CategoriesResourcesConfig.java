@@ -11,10 +11,10 @@ public class CategoriesResourcesConfig implements ResourcesConfig {
 	public void configure(HttpSecurity http) throws Exception {
 		
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
-			.antMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
-			.antMatchers(HttpMethod.POST, "/api/searchOption/kind").hasRole("ADMIN")
-			.antMatchers(HttpMethod.PUT, "/api/searchOption/kind/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.POST, "/api/v1/categories/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.PUT, "/api/v1/categories/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.POST, "/api/v1/searchOption/kind").hasRole("ADMIN")
+			.antMatchers(HttpMethod.PUT, "/api/v1/searchOption/kind/**").hasRole("ADMIN")
 			.anyRequest()
 			.permitAll();
 	}

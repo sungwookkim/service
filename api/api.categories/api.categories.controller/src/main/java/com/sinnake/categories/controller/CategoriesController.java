@@ -2,6 +2,7 @@ package com.sinnake.categories.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +21,7 @@ import com.sinnake.entity.ResultEntity;
 import util.PresentationProcess;
 
 @RestController
-@RequestMapping(value = "/api/categories")
+@RequestMapping(value = "/api/v1/categories")
 public class CategoriesController {
 
 	private CategoriesCommandService categoriesCommandService;
@@ -63,14 +64,14 @@ public class CategoriesController {
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	public ResponseEntity<ResultEntity<Map<String, Object>>> update(@PathVariable Long id
 		, @RequestParam(value = "categoryName", required = true) String categoryName
-		, @RequestParam(value = "searchOptionList", required = false, defaultValue = "") String searchOptionList
-		, @RequestParam(value = "parentId", required = false, defaultValue = "-1L") Long parentId		
+		, @RequestParam(value = "searchOptionList", required = false, defaultValue = "") String searchOptionList		
+		, @RequestParam(value = "parentId", required = false, defaultValue = "-1") Long parentId
 		, HttpServletRequest req) {
 
 		return new PresentationProcess<Map<String, Object>>()
 			.process(() -> {
-				
-				return this.categoriesCommandService.categoriesUpdate(id, parentId, categoryName, searchOptionList);				
+
+				return this.categoriesCommandService.categoriesUpdate(id, Optional.ofNullable(parentId).orElse(-1L), categoryName, searchOptionList);
 			})
 			.exec();
 	}
