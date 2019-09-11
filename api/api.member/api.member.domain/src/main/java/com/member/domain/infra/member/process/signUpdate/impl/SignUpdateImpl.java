@@ -51,7 +51,7 @@ public class SignUpdateImpl extends SignUpImpl implements SignUpdate {
 		memberDetail.setDetailAddress(this.getDetailAddress());
 		memberDetail.setPostCode(this.getPostCode());
 		
-		return new ResultEntity<>("1", this.member);
+		return new ResultEntity<>(ResultEntity.sucessCodeString(), this.member);
 	}
 	
 	/**

@@ -28,7 +28,7 @@ public interface CommonGet {
 	static public <T, R, U> Map<T, List<R>> convert(Map<T, List<U>> value, Function<U, R> convert) {
 		
 		return value.entrySet().stream()
-			.collect(Collectors.toMap(Map.Entry::getKey				
+			.collect(Collectors.toMap(Map.Entry::getKey
 				, v -> convert(v.getValue(), convert) ));		
 	}
 }

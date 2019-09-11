@@ -39,7 +39,7 @@ public class SearchOptionKindUpdateImpl extends SearchOptionKindAddImpl implemen
 	@Override
 	public ResultEntity<SearchOptionKind> sucess(String code) {
 
-		return Optional.ofNullable(this.searchOptionKind.getId())			
+		return Optional.ofNullable(this.searchOptionKind.getId())
 			.filter(i -> 0L < i)
 			.map(i -> {
 				this.searchOptionKind.setSearchOptionName(this.searchOptionName);
