@@ -5,7 +5,7 @@ iplist:
       port: 9090
   eureka:
     defaultZone:
-      ip: eureka.sinnake.kro.kr
+      ip: s1nnak2.iptime.org
       port: 8761
   redis:
     ip: redis.sinnake.kro.kr
