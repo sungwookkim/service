@@ -16,13 +16,7 @@ import util.SinnakeAES256Util;
 public class SinnakeCategoriesApplication {
 
 	public static void main(String[] args) {
-		try {
-			new SinnakeAES256Util("sinnakeAes256@$%DB").aesDecode("MnNNNxK6gwZo9c9Jv8s33g==");
-			new SinnakeAES256Util("sinnakeAes256@$%DB").aesDecode("ytHp9z9rxLogkLtiOcJx/A==");
-			new SinnakeAES256Util("sinnakeAes256@$%DB").aesDecode("DB5WQK4FSTP9fowhoQHkX8chftf4sKCEeUVlxYeGpM11AK6ESqaU1BF1FPm3KvnHAVY7sa2RhslyVLGU0fG7hwZyaXv5jEzp6/dLce1GCSk=");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		
 		SpringApplication.run(SinnakeCategoriesApplication.class, args);
 	}
 	
