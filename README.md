@@ -7,6 +7,6 @@ https://app.swaggerhub.com/apis-docs/sinnake6/service/1.0.0-oas3#/
 http://admin.sinnake.kro.kr:9090/#/applications  
 **Eureka Server**  
 http://eureka.sinnake.kro.kr:8761  
-http://eureka2.sinnake.kro.kr:8761
+http://eureka2.sinnake.kro.kr:8761  
 **프로젝트의 간략 설명**
 https://github.com/sungwookkim/service/wiki
